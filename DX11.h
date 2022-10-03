@@ -7,7 +7,7 @@
 class DirectX11
 {
 public:
-	bool Init();
+	bool Init(HWND hWnd);
 	void BeforeRender();
 	void AfterRender();
 	void Release();
@@ -18,4 +18,6 @@ private:
 	IDXGISwapChain*			m_pSwapChain;			// スワップチェイン
 	ID3D11RenderTargetView* m_pRenderTargetView;	// レンダーターゲットビュー
 
+	UINT					m_Width;				// スクリーンの横幅
+	UINT					m_Height;				// スクリーンの縦幅
 };

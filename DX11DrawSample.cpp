@@ -3,6 +3,8 @@
 
 #include "framework.h"
 #include "DX11DrawSample.h"
+#include "DX11.h"
+#include "ScreenSize.h"
 
 #define MAX_LOADSTRING 100
 
@@ -16,6 +18,8 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+DirectX11 g_DX11;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -50,8 +54,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+        g_DX11.BeforeRender();
+        g_DX11.AfterRender();
+
     }
 
+
+    g_DX11.Release();
     return (int) msg.wParam;
 }
 
@@ -97,13 +107,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
 
+   // ウィンドウサイズ設定
+   RECT rc = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
       return FALSE;
    }
+
+   if (!g_DX11.Init(hWnd))
+   {
+       return FALSE;
+   };
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
