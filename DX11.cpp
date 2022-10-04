@@ -291,6 +291,11 @@ ID3D11Device* DirectX11::GetDevice()
 	return m_pDevice;
 }
 
+ID3D11DeviceContext* DirectX11::GetDeviceContext()
+{
+	return m_pDeviceContext;
+}
+
 template<typename T> void SafeRelease(T*& _ptr)
 {
 	if (_ptr != nullptr)
