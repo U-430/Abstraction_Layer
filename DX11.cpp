@@ -158,6 +158,7 @@ bool DirectX11::Init(HWND hWnd)
 		return false;
 	}
 
+	// バックバッファの設定
 	ID3D11Texture2D* pBackBuffer;
 
 	hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
@@ -173,6 +174,95 @@ bool DirectX11::Init(HWND hWnd)
 	{
 		return false;
 	}
+
+	// 深度ステンシルバッファ作成
+	D3D11_TEXTURE2D_DESC texDesc;
+	ZeroMemory(&texDesc, sizeof(texDesc));
+
+	texDesc.Width = m_Width;
+	texDesc.Height = m_Height;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 1;
+	texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	texDesc.SampleDesc.Count = 1;
+	texDesc.SampleDesc.Quality = 0;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	texDesc.CPUAccessFlags = 0;
+	texDesc.MiscFlags = 0;
+
+	hr = m_pDevice->CreateTexture2D(&texDesc, NULL, &m_pDepthStencilTexture);
+
+	if (SUCCEEDED(hr))
+	{
+		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+		ZeroMemory(&dsvDesc, sizeof(dsvDesc));
+
+		dsvDesc.Format = texDesc.Format;
+		dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		dsvDesc.Texture2D.MipSlice = 0;
+
+		hr = m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &dsvDesc, &m_pDepthStencilView);
+	}
+
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	// レンダリングターゲット設定
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+
+	// ビューポート設定
+	D3D11_VIEWPORT viewPort;
+
+	viewPort.Width = (FLOAT)m_Width;
+	viewPort.Height = (FLOAT)m_Height;
+	viewPort.MinDepth = 0.0f;
+	viewPort.MaxDepth = 1.0f;
+	viewPort.TopLeftX = 0.0f;
+	viewPort.TopLeftY = 0.0f;
+
+	m_pDeviceContext->RSSetViewports(1, &viewPort);
+
+	// ブレンドステート初期化
+	ZeroMemory(&blendStateDescription, sizeof(D3D11_BLEND_DESC));
+
+	// ブレンドステート設定
+	blendStateDescription.RenderTarget[0].BlendEnable = TRUE;
+	blendStateDescription.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendStateDescription.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendStateDescription.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendStateDescription.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendStateDescription.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendStateDescription.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 0x0f;
+
+	// ブレンドステート生成
+	hr = m_pDevice->CreateBlendState(&blendStateDescription, &m_pBlendState);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	// サンプラーステート設定
+	D3D11_SAMPLER_DESC smpDesc;
+	ZeroMemory(&smpDesc, sizeof(smpDesc));
+
+	smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+
+	// サンプラーステート生成
+	hr = m_pDevice->CreateSamplerState(&smpDesc, &m_pSamperState);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	// サンプラーステート転送
+	m_pDeviceContext->PSSetSamplers(0, 1, &m_pSamperState);
 
 	return true;
 }
@@ -194,6 +284,11 @@ void DirectX11::Release()
 	SafeRelease(m_pRenderTargetView);
 	SafeRelease(m_pDeviceContext);
 	SafeRelease(m_pDevice);
+}
+
+ID3D11Device* DirectX11::GetDevice()
+{
+	return m_pDevice;
 }
 
 template<typename T> void SafeRelease(T*& _ptr)
