@@ -271,6 +271,7 @@ void DirectX11::BeforeRender()
 {
 	float clearColor[] = { 0.75f, 0.75f, 0.75f, 1.0f };
 	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, clearColor);
+
 }
 
 void DirectX11::AfterRender()

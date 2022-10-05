@@ -10,6 +10,13 @@ struct squareVertex
 	DirectX::XMFLOAT4 color;
 };
 
+struct constantBuffer
+{
+	DirectX::XMFLOAT4X4 world;
+	DirectX::XMFLOAT4X4 view;
+	DirectX::XMFLOAT4X4 proj;
+};
+
 class Square
 {
 public:

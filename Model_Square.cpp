@@ -97,6 +97,14 @@ void Square::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	{
 
 	}
+
+	// 定数バッファ生成
+	D3D11_BUFFER_DESC cdDesc;
+
+	cdDesc.ByteWidth = sizeof(constantBuffer);
+	cdDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cdDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cdDesc.Usage = D3D11_USAGE_DYNAMIC;
 }
 
 void Square::Draw()
