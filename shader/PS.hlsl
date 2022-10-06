@@ -10,11 +10,11 @@ struct PSOutput
 };
 
 // ピクセルシェーダーのメインエントリーポイント
-PSOutput main( VSOutput Input )
+float4 main( VSOutput input ) : SV_TARGET
 {
 	PSOutput output = (PSOutput)0;
 
-	output.Color = Input.Color;
+	output.Color = input.Color;
 
-	return output;
+	return float4(1,1,1,1);
 }

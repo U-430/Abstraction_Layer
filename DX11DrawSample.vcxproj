@@ -149,12 +149,14 @@
     <ClInclude Include="Model_Square.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ScreenSize.h" />
+    <ClInclude Include="System_DirectX11.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11.cpp" />
     <ClCompile Include="DX11DrawSample.cpp" />
     <ClCompile Include="Model_Square.cpp" />
+    <ClCompile Include="System_DirectX11.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11DrawSample.rc" />
