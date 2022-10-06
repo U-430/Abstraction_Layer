@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "DX11DrawSample.h"
 #include "DX11.h"
+#include "System_DirectX11.h"
 #include "ScreenSize.h"
 #include "Model_Square.h"
 
@@ -21,6 +22,7 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 DirectX11 g_DX11;
+SystemDirectX11 g_DirectX11;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -56,13 +58,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        g_DX11.BeforeRender();
-        g_DX11.AfterRender();
+        g_DirectX11.BeforeRender();
+        g_DirectX11.AfterRender();
 
     }
 
 
-    g_DX11.Release();
+    g_DirectX11.Release();
     return (int) msg.wParam;
 }
 
@@ -119,7 +121,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   if (!g_DX11.Init(hWnd))
+   if (!g_DirectX11.Init(hWnd))
    {
        return FALSE;
    };
