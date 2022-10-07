@@ -1,7 +1,7 @@
 #include "Model_Cube.h"
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
-#include "ScreenSize.h"
+#include "System_ScreenSize.h"
 
 #pragma comment (lib, "d3dcompiler.lib")
 
@@ -21,6 +21,12 @@ struct ConstantBuffer
 	DirectX::XMFLOAT4X4 proj;
 };
 
+//--------------------------------------------- 
+/// \param[in] ID3D11Device*(_device)
+/// \param[in] ID3D11DeviceContext*(_context)
+/// 
+/// \return 
+//---------------------------------------------
 bool ModelCube::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 {
 	HRESULT hr = S_OK;
@@ -289,4 +295,8 @@ void ModelCube::Releace()
 	SAFE_RELEASE(m_pPixelShader);
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pVertexShader);
+	SAFE_RELEASE(m_pConstantBuffer);
+	SAFE_RELEASE(m_pTexture);
+	SAFE_RELEASE(m_pSRV);
+	SAFE_RELEASE(m_pIndexBuffer);
 }

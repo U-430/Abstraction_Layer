@@ -5,7 +5,7 @@
 #include "DX11DrawSample.h"
 #include "DX11.h"
 #include "System_DirectX11.h"
-#include "ScreenSize.h"
+#include "System_ScreenSize.h"
 #include "Model_Cube.h"
 
 #define MAX_LOADSTRING 100

@@ -2,6 +2,11 @@
 
 #define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
 
+//--------------------------------------------- 
+/// \param[in] (hWnd)
+/// 
+/// \return 
+//---------------------------------------------
 bool SystemDirectX11::SystemInit(HWND hWnd)
 {
     HRESULT  hr;
@@ -115,6 +120,9 @@ bool SystemDirectX11::SystemInit(HWND hWnd)
     return true;
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX11::SystemBeforeRender()
 {
     float clearColor[4] = { 0.75f, 0.75f, 0.75f, 1.0f }; //red,green,blue,alpha
@@ -126,11 +134,17 @@ void SystemDirectX11::SystemBeforeRender()
     m_pDeviceContext->RSSetState(m_pRRS);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX11::SystemAfterRender()
 {
     m_pSwapChain->Present(0, 0);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX11::SystemRelease()
 {
     SAFE_RELEASE(m_pDepthStencilTexture);
@@ -143,11 +157,17 @@ void SystemDirectX11::SystemRelease()
     SAFE_RELEASE(m_pDevice);
 }
 
+//--------------------------------------------- 
+/// \return ID3D11Device*
+//---------------------------------------------
 ID3D11Device* SystemDirectX11::SystemGetDevice()
 {
 	return m_pDevice;
 }
 
+//--------------------------------------------- 
+/// \return ID3D11DeviceContext*
+//---------------------------------------------
 ID3D11DeviceContext* SystemDirectX11::SystemGetDeviceContext()
 {
 	return m_pDeviceContext;

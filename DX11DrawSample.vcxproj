@@ -143,21 +143,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DX11.h" />
     <ClInclude Include="DX11DrawSample.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Model_Cube.h" />
-    <ClInclude Include="Model_Square.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ScreenSize.h" />
+    <ClInclude Include="System_ScreenSize.h" />
     <ClInclude Include="System_DirectX11.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DX11.cpp" />
     <ClCompile Include="DX11DrawSample.cpp" />
     <ClCompile Include="Model_Cube.cpp" />
-    <ClCompile Include="Model_Square.cpp" />
     <ClCompile Include="System_DirectX11.cpp" />
   </ItemGroup>
   <ItemGroup>
