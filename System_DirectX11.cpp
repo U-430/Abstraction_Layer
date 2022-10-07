@@ -1,3 +1,9 @@
+//==============================================================================
+// Filename: System_DirectX11.cpp
+// Description: DirectX11 System
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include "System_DirectX11.h"
 
 #define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}

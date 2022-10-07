@@ -1,3 +1,9 @@
+//==============================================================================
+// Filename: Model_Cube.cpp
+// Description: CubeClass
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include "Model_Cube.h"
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
