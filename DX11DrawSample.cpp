@@ -3,7 +3,6 @@
 
 #include "framework.h"
 #include "DX11DrawSample.h"
-#include "DX11.h"
 #include "System_DirectX11.h"
 #include "System_ScreenSize.h"
 #include "Model_Cube.h"
@@ -21,8 +20,8 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-SystemDirectX11 g_DirectX11;
-ModelCube g_Cube;
+SystemDirectX11 g_DirectX11;    /// DirectX11
+ModelCube g_Cube;               /// Cubeクラス
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
