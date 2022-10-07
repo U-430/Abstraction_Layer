@@ -261,6 +261,9 @@ bool ModelCube::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	return true;
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void ModelCube::Draw()
 {
 	UINT strides = sizeof(Vertex);
@@ -288,6 +291,9 @@ void ModelCube::Draw()
 	m_pContext->DrawIndexed(6 * 6, 0, 0);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void ModelCube::Releace()
 {
 	SAFE_RELEASE(m_pSampler);
