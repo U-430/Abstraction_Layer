@@ -6,7 +6,7 @@
 #include "DX11.h"
 #include "System_DirectX11.h"
 #include "ScreenSize.h"
-#include "Model_Square.h"
+#include "Model_Cube.h"
 
 #define MAX_LOADSTRING 100
 
@@ -21,8 +21,8 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-DirectX11 g_DX11;
 SystemDirectX11 g_DirectX11;
+ModelCube g_Cube;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -59,11 +59,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
 
         g_DirectX11.BeforeRender();
+        g_Cube.Draw();
         g_DirectX11.AfterRender();
 
     }
 
-
+    g_Cube.Releace();
     g_DirectX11.Release();
     return (int) msg.wParam;
 }
@@ -125,6 +126,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
        return FALSE;
    };
+
+   if (!g_Cube.Init(g_DirectX11.GetDevice(), g_DirectX11.GetDeviceContext()))
+   {
+       return FALSE;
+   }
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Old">
+      <UniqueIdentifier>{fcccd293-96d0-4db6-9e97-a4f3c6a98c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Old">
+      <UniqueIdentifier>{ee87b46b-47be-4bdf-93ac-e1b61b5755ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -27,30 +33,36 @@
     <ClInclude Include="DX11DrawSample.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DX11.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ScreenSize.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Model_Square.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="System_DirectX11.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11.h">
+      <Filter>ヘッダー ファイル\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="Model_Square.h">
+      <Filter>ヘッダー ファイル\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="Model_Cube.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11DrawSample.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DX11.cpp">
+    <ClCompile Include="System_DirectX11.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Model_Square.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Old</Filter>
     </ClCompile>
-    <ClCompile Include="System_DirectX11.cpp">
+    <ClCompile Include="DX11.cpp">
+      <Filter>ソース ファイル\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="Model_Cube.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

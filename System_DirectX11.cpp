@@ -62,15 +62,24 @@ bool SystemDirectX11::Init(HWND hWnd)
         return false;
     }
 
+    //ビューポート設定
+    m_ViewPort.TopLeftX = 0;
+    m_ViewPort.TopLeftY = 0;
+    m_ViewPort.Width = (FLOAT)m_Width;
+    m_ViewPort.Height = (FLOAT)m_Height;
+    m_ViewPort.MinDepth = 0.0f;
+    m_ViewPort.MaxDepth = 1.0f;
+
     return true;
 }
 
 void SystemDirectX11::BeforeRender()
 {
-    float clearColor[4] = { 0.0f, 0.0f, 1.0f, 1.0f }; //red,green,blue,alpha
+    float clearColor[4] = { 0.75f, 0.75f, 0.75f, 1.0f }; //red,green,blue,alpha
 
     m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
     m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, clearColor);
+    m_pDeviceContext->RSSetViewports(1, &m_ViewPort);
 }
 
 void SystemDirectX11::AfterRender()

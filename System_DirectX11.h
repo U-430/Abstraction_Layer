@@ -24,13 +24,11 @@ private:
 	ID3D11Texture2D*		m_pDepthStencilTexture;	/// 
 	ID3D11DepthStencilView* m_pDepthStencilView;	/// デプスステンシルビュー
 	ID3D11InputLayout*		m_pInputLayout;			/// インプットレイアウト
-	ID3D11VertexShader*		m_pVertexShader;
-	ID3D11PixelShader*		m_pPixelShader;
 	ID3D11SamplerState*		m_pSamperState;
 	ID3D11BlendState*		m_pBlendState;
 	ID3D11Buffer*			m_pBuffer;
 
-	D3D11_VIEWPORT			m_viewPort;				/// ビューポート
+	D3D11_VIEWPORT			m_ViewPort;				/// ビューポート
 
 
 	UINT					m_Width;				/// スクリーンの横幅
