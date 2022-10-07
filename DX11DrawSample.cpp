@@ -58,14 +58,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        g_DirectX11.BeforeRender();
+        g_DirectX11.SystemBeforeRender();
         g_Cube.Draw();
-        g_DirectX11.AfterRender();
+        g_DirectX11.SystemAfterRender();
 
     }
 
     g_Cube.Releace();
-    g_DirectX11.Release();
+    g_DirectX11.SystemRelease();
     return (int) msg.wParam;
 }
 
@@ -122,12 +122,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   if (!g_DirectX11.Init(hWnd))
+   if (!g_DirectX11.SystemInit(hWnd))
    {
        return FALSE;
    };
 
-   if (!g_Cube.Init(g_DirectX11.GetDevice(), g_DirectX11.GetDeviceContext()))
+   if (!g_Cube.Init(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
    {
        return FALSE;
    }

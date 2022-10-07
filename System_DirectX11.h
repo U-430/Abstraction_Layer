@@ -1,4 +1,9 @@
 #pragma once
+//==============================================================================
+// Filename: System_DirectX11.h
+// Description: DirectX11 System
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
 #include <d3d11.h>
 
 #pragma comment(lib, "d3d11.lib")
@@ -8,13 +13,13 @@
 class SystemDirectX11
 {
 public:
-	bool Init(HWND hWnd);
-	void BeforeRender();
-	void AfterRender();
-	void Release();
+	bool SystemInit(HWND hWnd);
+	void SystemBeforeRender();
+	void SystemAfterRender();
+	void SystemRelease();
 
-	ID3D11Device* GetDevice();
-	ID3D11DeviceContext* GetDeviceContext();
+	ID3D11Device* SystemGetDevice();
+	ID3D11DeviceContext* SystemGetDeviceContext();
 
 private:
 	ID3D11Device*			m_pDevice;				/// デバイス
@@ -24,9 +29,7 @@ private:
 	ID3D11Texture2D*		m_pDepthStencilTexture;	/// 
 	ID3D11DepthStencilView* m_pDepthStencilView;	/// デプスステンシルビュー
 	ID3D11InputLayout*		m_pInputLayout;			/// インプットレイアウト
-	ID3D11SamplerState*		m_pSamperState;
-	ID3D11BlendState*		m_pBlendState;
-	ID3D11Buffer*			m_pBuffer;
+	ID3D11RasterizerState*  m_pRRS;					/// ラスタライザ
 
 	D3D11_VIEWPORT			m_ViewPort;				/// ビューポート
 

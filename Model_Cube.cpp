@@ -1,10 +1,11 @@
 #include "Model_Cube.h"
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
+#include "ScreenSize.h"
 
 #pragma comment (lib, "d3dcompiler.lib")
 
-#define VERTEX_NUM 4
+#define VERTEX_NUM 24
 
 struct Vertex
 {
@@ -33,10 +34,45 @@ bool ModelCube::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 
 	Vertex v[] =
 	{
-		{DirectX::XMFLOAT3(-0.5f, -0.5f, 0.0f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3(-0.5f,  0.5f, 0.0f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3( 0.5f, -0.5f, 0.0f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f, 0.0f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+
+		{DirectX::XMFLOAT3(0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+
+		{DirectX::XMFLOAT3( 0.5f, -0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+
+		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+
+		{DirectX::XMFLOAT3(-0.5f, 0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f, 0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f, 0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f, 0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+	};
+
+	WORD indexList[]
+	{
+		0, 1, 2, 3, 2, 1,
+		4, 5, 6, 7, 6, 5,
+		8, 9,10, 11, 10, 9,
+		12, 13, 14, 15, 14, 13,
+		16, 17, 18, 19, 18 ,17,
+		20, 21, 22, 23, 22, 21,
 	};
 
 	// 頂点データ定義
@@ -97,6 +133,62 @@ bool ModelCube::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 
 	// インプットレイアウト生成
 	hr = m_pDev->CreateInputLayout(layout, ARRAYSIZE(layout), pBlobVS->GetBufferPointer(), pBlobVS->GetBufferSize(), &m_pInputLayout);
+
+	D3D11_BUFFER_DESC ibDesc;
+	ibDesc.ByteWidth = sizeof(WORD) * 6 * 6;
+	ibDesc.Usage = D3D11_USAGE_DEFAULT;
+	ibDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	ibDesc.CPUAccessFlags = 0;
+	ibDesc.MiscFlags = 0;
+	ibDesc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA irData;
+	irData.pSysMem = indexList;
+	irData.SysMemPitch = 0;
+	irData.SysMemSlicePitch = 0;
+
+	hr = m_pDev->CreateBuffer(&ibDesc, &irData, &m_pIndexBuffer);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	// 定数バッファ生成
+	D3D11_BUFFER_DESC cbDesc;
+	cbDesc.ByteWidth = sizeof(ConstantBuffer);
+	cbDesc.Usage = D3D11_USAGE_DEFAULT;
+	cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cbDesc.CPUAccessFlags = 0;
+	cbDesc.MiscFlags = 0;
+	cbDesc.StructureByteStride = 0;
+
+	hr = m_pDev->CreateBuffer(&cbDesc, NULL, &m_pConstantBuffer);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	// 行列計算
+	DirectX::XMMATRIX worldMatrix = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f);
+
+	DirectX::XMVECTOR eye = DirectX::XMVectorSet(2.0f, 2.0f, -5.0f, 0.0f);
+	DirectX::XMVECTOR focus = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	DirectX::XMVECTOR up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(eye, focus, up);
+
+	constexpr float    fov = DirectX::XMConvertToRadians(45.0f);
+	float    aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+	float    nearZ = 0.1f;
+	float    farZ = 100.0f;
+	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(fov, aspect, nearZ, farZ);
+
+	// 定数バッファ更新
+	ConstantBuffer cb;
+	DirectX::XMStoreFloat4x4(&cb.world, DirectX::XMMatrixTranspose(worldMatrix));
+	DirectX::XMStoreFloat4x4(&cb.view, DirectX::XMMatrixTranspose(viewMatrix));
+	DirectX::XMStoreFloat4x4(&cb.proj, DirectX::XMMatrixTranspose(projMatrix));
+	m_pContext->UpdateSubresource(m_pConstantBuffer, 0, NULL, &cb, 0, 0);
+
 
 	// サンプラー設定
 	D3D11_SAMPLER_DESC smpDesc;
@@ -168,17 +260,26 @@ void ModelCube::Draw()
 	UINT strides = sizeof(Vertex);
 	UINT offsets = 0;
 
+	// ポリゴン
 	m_pContext->IASetInputLayout(m_pInputLayout);
 	m_pContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &strides, &offsets);
-	m_pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	m_pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+	// バッファ
+	m_pContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
+
+	// テクスチャ
 	m_pContext->PSSetShaderResources(0, 1, &m_pSRV);
 	m_pContext->PSSetSamplers(0, 1, &m_pSampler);
 
+	// シェーダー
 	m_pContext->VSSetShader(m_pVertexShader, NULL, 0);
 	m_pContext->PSSetShader(m_pPixelShader, NULL, 0);
 
-	m_pContext->Draw(VERTEX_NUM, 0);
+	// 描画
+	//m_pContext->Draw(VERTEX_NUM, 0);
+	m_pContext->DrawIndexed(6 * 6, 0, 0);
 }
 
 void ModelCube::Releace()

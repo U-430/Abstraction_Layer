@@ -1,6 +1,8 @@
 #include "System_DirectX11.h"
 
-bool SystemDirectX11::Init(HWND hWnd)
+#define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
+
+bool SystemDirectX11::SystemInit(HWND hWnd)
 {
     HRESULT  hr;
     RECT rect;
@@ -70,34 +72,83 @@ bool SystemDirectX11::Init(HWND hWnd)
     m_ViewPort.MinDepth = 0.0f;
     m_ViewPort.MaxDepth = 1.0f;
 
+    // 深度ステンシルバッファ
+    D3D11_TEXTURE2D_DESC txDesc;
+    ZeroMemory(&txDesc, sizeof(txDesc));
+    txDesc.Width = m_Width;
+    txDesc.Height = m_Height;
+    txDesc.MipLevels = 1;
+    txDesc.ArraySize = 1;
+    txDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    txDesc.SampleDesc.Count = 1;
+    txDesc.SampleDesc.Quality = 0;
+    txDesc.Usage = D3D11_USAGE_DEFAULT;
+    txDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    txDesc.CPUAccessFlags = 0;
+    txDesc.MiscFlags = 0;
+    hr = m_pDevice->CreateTexture2D(&txDesc, NULL, &m_pDepthStencilTexture);
+    if (FAILED(hr))
+    {
+        return false;
+    }
+
+    D3D11_DEPTH_STENCIL_VIEW_DESC dsDesc;
+    ZeroMemory(&dsDesc, sizeof(dsDesc));
+    dsDesc.Format = txDesc.Format;
+    dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+    dsDesc.Texture2D.MipSlice = 0;
+    hr = m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &dsDesc, &m_pDepthStencilView);
+    if (FAILED(hr))
+    {
+        return false;
+    }
+
+    D3D11_RASTERIZER_DESC ras = {};
+    ras.FillMode = D3D11_FILL_SOLID;
+    ras.CullMode = D3D11_CULL_NONE;
+    hr = m_pDevice->CreateRasterizerState(&ras, &m_pRRS);
+    if (FAILED(hr))
+    {
+        return false;
+    }
+
     return true;
 }
 
-void SystemDirectX11::BeforeRender()
+void SystemDirectX11::SystemBeforeRender()
 {
     float clearColor[4] = { 0.75f, 0.75f, 0.75f, 1.0f }; //red,green,blue,alpha
 
-    m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
+    m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
     m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, clearColor);
+    m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
     m_pDeviceContext->RSSetViewports(1, &m_ViewPort);
+    m_pDeviceContext->RSSetState(m_pRRS);
 }
 
-void SystemDirectX11::AfterRender()
+void SystemDirectX11::SystemAfterRender()
 {
     m_pSwapChain->Present(0, 0);
 }
 
-void SystemDirectX11::Release()
+void SystemDirectX11::SystemRelease()
 {
-   
+    SAFE_RELEASE(m_pDepthStencilTexture);
+    SAFE_RELEASE(m_pDepthStencilView);
+    SAFE_RELEASE(m_pRenderTargetView);
+    SAFE_RELEASE(m_pRRS);
+    SAFE_RELEASE(m_pInputLayout);
+    SAFE_RELEASE(m_pSwapChain);
+    SAFE_RELEASE(m_pDeviceContext);
+    SAFE_RELEASE(m_pDevice);
 }
 
-ID3D11Device* SystemDirectX11::GetDevice()
+ID3D11Device* SystemDirectX11::SystemGetDevice()
 {
 	return m_pDevice;
 }
 
-ID3D11DeviceContext* SystemDirectX11::GetDeviceContext()
+ID3D11DeviceContext* SystemDirectX11::SystemGetDeviceContext()
 {
 	return m_pDeviceContext;
 }
