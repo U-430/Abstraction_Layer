@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "DX11DrawSample.h"
 #include "System_DirectX11.h"
+#include "System_DirectX12.h"
 #include "System_ScreenSize.h"
 #include "Model_Cube.h"
 
@@ -20,7 +21,9 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-SystemDirectX11 g_DirectX11;    /// DirectX11
+// グローバル変数
+SystemDirectX11 g_DirectX11;    /// DirectX11クラス
+SystemDirectX12 g_DirectX12;    /// DirectX12クラス
 ModelCube g_Cube;               /// Cubeクラス
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -57,14 +60,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        g_DirectX11.SystemBeforeRender();
-        g_Cube.Draw();
-        g_DirectX11.SystemAfterRender();
+        //g_DirectX11.SystemBeforeRender();
+        //g_Cube.Draw();
+        //g_DirectX11.SystemAfterRender();
+
+        g_DirectX12.BeforeRender();
+        g_DirectX12.AfterRender();
 
     }
 
-    g_Cube.Releace();
-    g_DirectX11.SystemRelease();
+    //g_Cube.Releace();
+    //g_DirectX11.SystemRelease();
+    g_DirectX12.Release();
     return (int) msg.wParam;
 }
 
@@ -121,12 +128,23 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   if (!g_DirectX11.SystemInit(hWnd))
-   {
-       return FALSE;
-   };
+   //if (g_DirectX11.SystemInit(hWnd))
+   //{
+   //    if (!g_Cube.Init(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
+   //    {
+   //        return FALSE;
+   //    }
+   //}
+   //else
+   //{
+   //    return FALSE;
+   //}
 
-   if (!g_Cube.Init(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
+   if (g_DirectX12.InitDX12(hWnd))
+   {
+
+   }
+   else
    {
        return FALSE;
    }
