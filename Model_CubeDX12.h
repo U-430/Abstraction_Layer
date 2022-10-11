@@ -19,11 +19,11 @@ struct alignas(256) Transform
 	DirectX::XMMATRIX Proj;		// 射影行列
 };
 
-class Square 
+class ModelCubeDX12 
 {
 public:
-	bool Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd, uint32_t frameindex);	// 初期化処理
-	void Update();	// 更新処理
+	bool Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd);	// 初期化処理
+	void Update(uint32_t frameindex);	// 更新処理
 	void Draw();	// 描画処理
 	void Release();	// 解放処理
 

@@ -4,7 +4,7 @@
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
-#include "Model_Cube.h"
+#include "Model_CubeDX11.h"
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
 #include "System_ScreenSize.h"
@@ -33,7 +33,7 @@ struct ConstantBuffer
 /// 
 /// \return 
 //---------------------------------------------
-bool ModelCube::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
+bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 {
 	HRESULT hr = S_OK;
 
@@ -270,7 +270,7 @@ bool ModelCube::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 //--------------------------------------------- 
 /// \return 
 //---------------------------------------------
-void ModelCube::Draw()
+void ModelCubeDX11::Draw()
 {
 	UINT strides = sizeof(Vertex);
 	UINT offsets = 0;
@@ -300,7 +300,7 @@ void ModelCube::Draw()
 //--------------------------------------------- 
 /// \return 
 //---------------------------------------------
-void ModelCube::Releace()
+void ModelCubeDX11::Releace()
 {
 	SAFE_RELEASE(m_pSampler);
 	SAFE_RELEASE(m_pInputLayout);

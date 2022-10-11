@@ -1,4 +1,4 @@
-#include "Square.h"
+#include "Model_CubeDX12.h"
 #include "System_ScreenSize.h"
 #include <iostream>
 
@@ -11,11 +11,10 @@ struct Vertex
 	XMFLOAT4 Color;
 };
 
-bool Square::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd, uint32_t frameindex)
+bool ModelCubeDX12::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd)
 {
 	m_pDev = device;
 	m_pCmd = cmd;
-	m_FrameIndex - frameindex;
 
 	// 頂点バッファの生成
 	{
@@ -245,7 +244,7 @@ bool Square::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd, uint32_t
 				return false;
 			}
 
-			auto eyePos = XMVectorSet(0.0f, 0.0, 5.0f, 0.0f);
+			auto eyePos = XMVectorSet(0.0f, 0.0, -5.0f, 0.0f);
 			auto targetPos = XMVectorZero();
 			auto upward = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
@@ -381,7 +380,7 @@ bool Square::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd, uint32_t
 		ID3DBlob* pPSBlob;
 
 		// 頂点シェーダ読み込み
-		auto hr = D3DReadFileToBlob(L"SimpleVS.cso", &pVSBlob);
+		auto hr = D3DReadFileToBlob(L"shader/SimpleVS.cso", &pVSBlob);
 
 		if (FAILED(hr))
 		{
@@ -389,7 +388,7 @@ bool Square::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd, uint32_t
 		}
 
 		// ピクセルシェーダ読み込み
-		hr = D3DReadFileToBlob(L"SimplePS.cso", &pPSBlob);
+		hr = D3DReadFileToBlob(L"shader/SimplePS.cso", &pPSBlob);
 
 		if (FAILED(hr))
 		{
@@ -445,13 +444,15 @@ bool Square::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd, uint32_t
 	return true;
 }
 
-void Square::Update()
+void ModelCubeDX12::Update(uint32_t frameindex)
 {
-	m_RotateAngle += 0.025f;
-	m_CBV[m_FrameIndex].pBuffer->World = XMMatrixRotationY(m_RotateAngle);
+	m_FrameIndex = frameindex;
+
+	/*m_RotateAngle += 0.025f;
+	m_CBV[m_FrameIndex].pBuffer->World = XMMatrixRotationY(m_RotateAngle);*/
 }
 
-void Square::Draw()
+void ModelCubeDX12::Draw()
 {
 	m_pCmd->SetGraphicsRootSignature(m_pRootSignature);
 	m_pCmd->SetDescriptorHeaps(1, &m_pHeapCBV);
@@ -467,7 +468,7 @@ void Square::Draw()
 	m_pCmd->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
-void Square::Release()
+void ModelCubeDX12::Release()
 {
 	for (auto i = 0; i < FRAME_COUNT; ++i)
 	{
@@ -479,22 +480,31 @@ void Square::Release()
 
 		//m_pCB[i].Reset();
 
-		m_pCB[i]->Release();
-		m_pCB[i] = nullptr;
+		//m_pCB[i]->Release();
+		//m_pCB[i] = nullptr;
 	}
 
 	//m_pVB.Reset();
 	
-	m_pVB->Release();
-	m_pVB = nullptr;
+	//m_pVB->Release();
+	//m_pVB = nullptr;
 
 	//m_pPSO.Reset();
 
-	m_pPSO->Release();
-	m_pPSO = nullptr;
+	//m_pPSO->Release();
+	//m_pPSO = nullptr;
+
+	//m_pHeapCBV->Release();
+	//m_pHeapCBV = nullptr;
+
+	//m_pIB->Release();
+	//m_pIB = nullptr;
+
+	m_pRootSignature->Release();
+	m_pRootSignature = nullptr;
 }
 
-void Square::SetPos(float x)
+void ModelCubeDX12::SetPos(float x)
 {
 	m_CBV->pBuffer->World = XMMatrixTranslation(x, 0, 0);
 }

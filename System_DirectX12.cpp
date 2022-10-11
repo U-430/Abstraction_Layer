@@ -33,9 +33,9 @@ bool SystemDirectX12::InitDX12(HWND hWnd)
 {
 
     #if defined(DEBUG) || defined(_DEBUG)
-        ComPtr<ID3D12Debug> debug;
+        ID3D12Debug* debug;
 
-        auto hl = D3D12GetDebugInterface(IID_PPV_ARGS(debug.GetAddressOf()));
+        auto hl = D3D12GetDebugInterface(IID_PPV_ARGS(&debug));
 
         // デバッグレイヤーを有効化
         if (SUCCEEDED(hl))

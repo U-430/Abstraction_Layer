@@ -11,7 +11,7 @@
 
 #define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
 
-class ModelCube
+class ModelCubeDX11
 {
 public:
 
