@@ -121,8 +121,8 @@ bool SystemDirectX12::InitDX12(HWND hWnd)
         desc.SampleDesc.Count                   = 1;                                        // ピクセル単位のマルチサンプリング数
         desc.SampleDesc.Quality                 = 0;                                        // 画像の品質 品質が高いほどパフォーマンスは低下
         desc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;          // バックバッファの使用方法
-        desc.BufferCount                        = FRAME_COUNT;                               // バックバッファの数
-        desc.OutputWindow                       = hWnd;                    // 出力するウィンドウのウィンドウハンドル
+        desc.BufferCount                        = FRAME_COUNT;                              // バックバッファの数
+        desc.OutputWindow                       = hWnd;                                     // 出力するウィンドウのウィンドウハンドル
         desc.Windowed                           = TRUE;                                     // フルスクリーン指定
         desc.SwapEffect                         = DXGI_SWAP_EFFECT_FLIP_DISCARD;            // バックバッファの入れ替え時効果
         desc.Flags                              = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;   // スワップチェインの動作オプション

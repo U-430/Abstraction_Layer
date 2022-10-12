@@ -202,20 +202,6 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	m_pContext->UpdateSubresource(m_pConstantBuffer, 0, NULL, &cb, 0, 0);
 
 
-	// サンプラー設定
-	D3D11_SAMPLER_DESC smpDesc;
-
-	ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
-	smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-	smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	hr = m_pDev->CreateSamplerState(&smpDesc, &m_pSampler);
-	if (FAILED(hr))
-	{
-		return false;
-	}
-
 	// テクスチャ生成
 	const int k_PixSize = 32;//縦横ピクセル数
 
@@ -240,16 +226,18 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 
 	//テクスチャ書き替え
 	D3D11_MAPPED_SUBRESOURCE msr;
+	//D3D11_SUBRESOURCE_DATA tex;
 	m_pContext->Map(m_pTexture, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 
-	byte srcData[k_PixSize * k_PixSize * 4] = { 1 };//ビットマップを白で初期化
+	byte srcData[k_PixSize * k_PixSize * 4] = {  };//ビットマップを白で初期化
 	for (int i = 0; i < k_PixSize * k_PixSize * 4; i += 4)
 	{
-		srcData[i] = 0; // 赤
+		srcData[i] = 1; // 赤
 		srcData[i + 1] = 1; // 緑
 		srcData[i + 2] = 1; // 青
+		srcData[i + 3] = 1; // アルファ値
 	}
-	memcpy(msr.pData, srcData, sizeof(srcData));
+	memcpy(msr.pData, &srcData, sizeof(srcData));
 
 	m_pContext->Unmap(m_pTexture, 0);
 
@@ -259,6 +247,20 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	srv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srv.Texture2D.MipLevels = 1;
 	hr = m_pDev->CreateShaderResourceView(m_pTexture, &srv, &m_pSRV);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	// サンプラー設定
+	D3D11_SAMPLER_DESC smpDesc;
+
+	ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
+	smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	hr = m_pDev->CreateSamplerState(&smpDesc, &m_pSampler);
 	if (FAILED(hr))
 	{
 		return false;
@@ -285,8 +287,8 @@ void ModelCubeDX11::Draw()
 	m_pContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
 
 	// テクスチャ
-	m_pContext->PSSetShaderResources(0, 1, &m_pSRV);
 	m_pContext->PSSetSamplers(0, 1, &m_pSampler);
+	m_pContext->PSSetShaderResources(0, 1, &m_pSRV);
 
 	// シェーダー
 	m_pContext->VSSetShader(m_pVertexShader, NULL, 0);

@@ -108,6 +108,7 @@ bool SystemDirectX11::SystemInit(HWND hWnd)
     dsDesc.Format = txDesc.Format;
     dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
     dsDesc.Texture2D.MipSlice = 0;
+
     hr = m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &dsDesc, &m_pDepthStencilView);
     if (FAILED(hr))
     {

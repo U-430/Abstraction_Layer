@@ -62,21 +62,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        //g_DirectX11.SystemBeforeRender();
-        //g_CubeDX11.Draw();
-        //g_DirectX11.SystemAfterRender();
+        g_DirectX11.SystemBeforeRender();
+        g_CubeDX11.Draw();
+        g_DirectX11.SystemAfterRender();
 
-        g_CubeDX12.Update(g_DirectX12.GetFrameIndex());
+        /*g_CubeDX12.Update(g_DirectX12.GetFrameIndex());
         g_DirectX12.BeforeRender();
         g_CubeDX12.Draw();
-        g_DirectX12.AfterRender();
+        g_DirectX12.AfterRender();*/
 
     }
 
-    //g_Cube.Releace();
-    //g_DirectX11.SystemRelease();
-    g_CubeDX12.Release();
-    g_DirectX12.Release();
+    g_CubeDX11.Releace();
+    g_DirectX11.SystemRelease();
+    /*g_CubeDX12.Release();
+    g_DirectX12.Release();*/
     return (int) msg.wParam;
 }
 
@@ -133,9 +133,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   //if (g_DirectX11.SystemInit(hWnd))
+   if (g_DirectX11.SystemInit(hWnd))
+   {
+       if (!g_CubeDX11.Init(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
+       {
+           return FALSE;
+       }
+   }
+   else
+   {
+       return FALSE;
+   }
+
+   //if (g_DirectX12.InitDX12(hWnd))
    //{
-   //    if (!g_CubeDX11.Init(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
+   //    if (!g_CubeDX12.Init(g_DirectX12.GetDevice(), g_DirectX12.GetCmdList()))
    //    {
    //        return FALSE;
    //    }
@@ -144,18 +156,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //{
    //    return FALSE;
    //}
-
-   if (g_DirectX12.InitDX12(hWnd))
-   {
-       if (!g_CubeDX12.Init(g_DirectX12.GetDevice(), g_DirectX12.GetCmdList()))
-       {
-           return FALSE;
-       }
-   }
-   else
-   {
-       //return FALSE;
-   }
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

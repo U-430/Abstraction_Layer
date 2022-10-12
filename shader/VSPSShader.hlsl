@@ -2,7 +2,7 @@ struct VSInput
 {
 	float4 Position : POSITION0;	// 位置座標
 	float4 Color	: COLOR0;		// 頂点カラー
-	float2 TexCoord : TEXCOORD0;	// UV
+	float2 TexCoord : TEXCOORD0;		// UV
 };
 
 struct VSOutput
@@ -45,8 +45,8 @@ float4 ps_main(VSOutput input) : SV_Target
 {
 	//PSOutput output = (PSOutput)0;
 
-	//float4 texcol = Tex.Sample(Sampler, input.TexCoord);
-	float4 texcol = float4(0, 1, 1, 1);
+	float4 texcol = Tex.Sample(Sampler, input.TexCoord);
+	//float4 texcol = float4(1, 1, 1, 1);
 
-	return input.Color;
+	return input.Color * texcol;
 }
