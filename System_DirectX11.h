@@ -4,6 +4,7 @@
 // Description: DirectX11 System
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
+
 #include <d3d11.h>
 
 #pragma comment(lib, "d3d11.lib")

@@ -1,3 +1,9 @@
+//==============================================================================
+// Filename: System_DirectX12.cpp
+// Description: DirectX12 System
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include "System_DirectX12.h"
 #include <Windows.h>
 #include <iostream>
@@ -29,7 +35,7 @@ template<typename T> void SafeRelease(T*& _ptr);
 //D3D12_CPU_DESCRIPTOR_HANDLE	        DirectX12::m_HandleRTV[FrameCount];
 //D3D12_CPU_DESCRIPTOR_HANDLE         DirectX12::m_HandleDSV;
 
-bool SystemDirectX12::InitDX12(HWND hWnd)
+bool SystemDirectX12::SystemInit(HWND hWnd)
 {
 
     #if defined(DEBUG) || defined(_DEBUG)
@@ -318,7 +324,7 @@ bool SystemDirectX12::InitDX12(HWND hWnd)
         clearValue.DepthStencil.Depth   = 1.0;
         clearValue.DepthStencil.Stencil = 0;
 
-        hr = SystemDirectX12::GetDevice()->CreateCommittedResource(
+        hr = SystemDirectX12::SystemGetDevice()->CreateCommittedResource(
             &prop,
             D3D12_HEAP_FLAG_NONE,
             &resDesc,
@@ -369,10 +375,10 @@ bool SystemDirectX12::InitDX12(HWND hWnd)
     return true;
 }
 
-void SystemDirectX12::Release()
+void SystemDirectX12::SystemRelease()
 {
     // GPU処理の完了を待機
-    WaitGPU();
+    SystemWaitGPU();
 
     // イベント破棄
     if (m_FenceEvent != nullptr)
@@ -419,7 +425,7 @@ void SystemDirectX12::Release()
     //m_pDevice.Reset();
 }
 
-void SystemDirectX12::Render()
+void SystemDirectX12::SystemRender()
 {
     // コマンドの記録を開始
     m_pCmdAllocator[m_FrameIndex]->Reset();
@@ -474,10 +480,10 @@ void SystemDirectX12::Render()
     m_pQueue->ExecuteCommandLists(1, ppCmdLists);
 
     // 画面に表示
-    Present(1);
+    SystemPresent(1);
 }
 
-void SystemDirectX12::BeforeRender()
+void SystemDirectX12::SystemBeforeRender()
 {
     // コマンドの記録を開始
     m_pCmdAllocator[m_FrameIndex]->Reset();
@@ -509,7 +515,7 @@ void SystemDirectX12::BeforeRender()
     m_pCmdList->ClearDepthStencilView(m_HandleDSV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-void SystemDirectX12::BeforeRender(float r, float g, float b)
+void SystemDirectX12::SystemBeforeRender(float r, float g, float b)
 {
     // コマンドの記録を開始
     m_pCmdAllocator[m_FrameIndex]->Reset();
@@ -541,7 +547,7 @@ void SystemDirectX12::BeforeRender(float r, float g, float b)
     m_pCmdList->ClearDepthStencilView(m_HandleDSV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-void SystemDirectX12::AfterRender()
+void SystemDirectX12::SystemAfterRender()
 {
     // リソースバリアの表示設定
     D3D12_RESOURCE_BARRIER barrier = {};
@@ -564,30 +570,30 @@ void SystemDirectX12::AfterRender()
     m_pQueue->ExecuteCommandLists(1, ppCmdLists);
 
     // 画面に表示
-    Present(1);
+    SystemPresent(1);
 }
 
-ID3D12Device* SystemDirectX12::GetDevice()
+ID3D12Device* SystemDirectX12::SystemGetDevice()
 {
     return m_pDevice;
 }
 
-ID3D12CommandQueue* SystemDirectX12::GetQueue()
+ID3D12CommandQueue* SystemDirectX12::SystemGetQueue()
 {
     return m_pQueue;
 }
 
-ID3D12GraphicsCommandList* SystemDirectX12::GetCmdList()
+ID3D12GraphicsCommandList* SystemDirectX12::SystemGetCmdList()
 {
     return m_pCmdList;
 }
 
-uint32_t SystemDirectX12::GetFrameIndex()
+uint32_t SystemDirectX12::SystemGetFrameIndex()
 {
     return m_FrameIndex;
 }
 
-void SystemDirectX12::WaitGPU()
+void SystemDirectX12::SystemWaitGPU()
 {
    // assert(m_pQueue != nullptr);
    // assert(m_pFence != nullptr);
@@ -606,7 +612,7 @@ void SystemDirectX12::WaitGPU()
     m_FenceCounter[m_FrameIndex]++;
 }
 
-void SystemDirectX12::Present(uint32_t _interval)
+void SystemDirectX12::SystemPresent(uint32_t _interval)
 {
     // 画面に表示
     m_pSwapChain->Present(_interval, 0);

@@ -1,3 +1,9 @@
+//==============================================================================
+// Filename: Model_CubeDX12.cpp
+// Description: CubeClass
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include "Model_CubeDX12.h"
 #include "System_ScreenSize.h"
 #include <iostream>
@@ -11,7 +17,7 @@ struct Vertex
 	XMFLOAT4 Color;
 };
 
-bool ModelCubeDX12::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd)
+bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* cmd)
 {
 	m_pDev = device;
 	m_pCmd = cmd;
@@ -479,7 +485,7 @@ bool ModelCubeDX12::Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd)
 	return true;
 }
 
-void ModelCubeDX12::Update(uint32_t frameindex)
+void ModelCubeDX12::ModelUpdate(uint32_t frameindex)
 {
 	m_FrameIndex = frameindex;
 
@@ -487,7 +493,7 @@ void ModelCubeDX12::Update(uint32_t frameindex)
 	m_CBV[m_FrameIndex].pBuffer->World = XMMatrixRotationY(m_RotateAngle);
 }
 
-void ModelCubeDX12::Draw()
+void ModelCubeDX12::ModelDraw()
 {
 	m_pCmd->SetGraphicsRootSignature(m_pRootSignature);
 	m_pCmd->SetDescriptorHeaps(1, &m_pHeapCBV);
@@ -503,7 +509,7 @@ void ModelCubeDX12::Draw()
 	m_pCmd->DrawIndexedInstanced(36, 1, 0, 0, 0);
 }
 
-void ModelCubeDX12::Release()
+void ModelCubeDX12::ModelRelease()
 {
 	for (auto i = 0; i < FRAME_COUNT; ++i)
 	{

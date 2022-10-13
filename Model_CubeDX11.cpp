@@ -1,5 +1,5 @@
 //==============================================================================
-// Filename: Model_Cube.cpp
+// Filename: Model_CubeDX11.cpp
 // Description: CubeClass
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
@@ -33,7 +33,7 @@ struct ConstantBuffer
 /// 
 /// \return 
 //---------------------------------------------
-bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
+bool ModelCubeDX11::ModelInit(ID3D11Device* _device, ID3D11DeviceContext* _context)
 {
 	HRESULT hr = S_OK;
 
@@ -116,7 +116,7 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	}
 
 	// 頂点シェーダー作成
-	hr = D3DCompileFromFile(L"shader/VSPSShader.hlsl", nullptr, nullptr, "vs_main", "vs_5_0", 0, 0, &pBlobVS, &pErrorBlob);
+	hr = D3DCompileFromFile(L"shader/DX11Shader.hlsl", nullptr, nullptr, "vs_main", "vs_5_0", 0, 0, &pBlobVS, &pErrorBlob);
 	if (FAILED(hr))
 	{
 		MessageBoxA(NULL, (LPCSTR)pErrorBlob->GetBufferPointer(), "Vertex Shader Erorr", MB_OK);
@@ -130,7 +130,7 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	}
 
 	// ピクセルシェーダー生成
-	hr = D3DCompileFromFile(L"shader/VSPSShader.hlsl", nullptr, nullptr, "ps_main", "ps_5_0", 0, 0, &pBlobPS, &pErrorBlob);
+	hr = D3DCompileFromFile(L"shader/DX11Shader.hlsl", nullptr, nullptr, "ps_main", "ps_5_0", 0, 0, &pBlobPS, &pErrorBlob);
 	if (FAILED(hr))
 	{
 		MessageBoxA(NULL, (LPCSTR)pErrorBlob->GetBufferPointer(), "Pixel Shader Erorr", MB_OK);
@@ -229,17 +229,36 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 	//D3D11_SUBRESOURCE_DATA tex;
 	m_pContext->Map(m_pTexture, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 
-	byte srcData[k_PixSize * k_PixSize * 4] = {  };//ビットマップを白で初期化
+	byte srcData[k_PixSize * k_PixSize * 4] = {  };
 	for (int i = 0; i < k_PixSize * k_PixSize * 4; i += 4)
 	{
-		srcData[i] = 1; // 赤
-		srcData[i + 1] = 1; // 緑
-		srcData[i + 2] = 1; // 青
-		srcData[i + 3] = 1; // アルファ値
+		if ((i / 4) % 4 == 0)
+		{
+			srcData[i] = 0;			// 赤
+			srcData[i + 1] = 255;	// 緑
+			srcData[i + 2] = 255;	// 青
+		}
+		else
+		{
+			srcData[i] = 255;		// 赤
+			srcData[i + 1] = 255;	// 緑
+			srcData[i + 2] = 255;	// 青
+		}
+
+		srcData[i + 3] = 255; // アルファ値
 	}
 	memcpy(msr.pData, &srcData, sizeof(srcData));
 
 	m_pContext->Unmap(m_pTexture, 0);
+
+	/*tex.pSysMem = &srcData;
+	tex.SysMemPitch = k_PixSize * 4;
+
+	hr = m_pDev->CreateTexture2D(&td, &tex, &m_pTexture);
+	if (FAILED(hr))
+	{
+		return false;
+	}*/
 
 	// シェーダーリソースビュー生成
 	D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
@@ -272,7 +291,7 @@ bool ModelCubeDX11::Init(ID3D11Device* _device, ID3D11DeviceContext* _context)
 //--------------------------------------------- 
 /// \return 
 //---------------------------------------------
-void ModelCubeDX11::Draw()
+void ModelCubeDX11::ModelDraw()
 {
 	UINT strides = sizeof(Vertex);
 	UINT offsets = 0;
@@ -302,7 +321,7 @@ void ModelCubeDX11::Draw()
 //--------------------------------------------- 
 /// \return 
 //---------------------------------------------
-void ModelCubeDX11::Releace()
+void ModelCubeDX11::ModelReleace()
 {
 	SAFE_RELEASE(m_pSampler);
 	SAFE_RELEASE(m_pInputLayout);

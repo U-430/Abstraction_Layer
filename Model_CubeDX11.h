@@ -1,6 +1,6 @@
 #pragma once
 //==============================================================================
-// Filename: Model_Cube.h
+// Filename: Model_CubeDX11.h
 // Description: CubeClass
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
@@ -14,12 +14,14 @@
 class ModelCubeDX11
 {
 public:
+	// 初期化処理
+	bool ModelInit(ID3D11Device* _device, ID3D11DeviceContext* _context);
 
-	bool Init(ID3D11Device* _device, ID3D11DeviceContext* _context);
+	// 描画処理
+	void ModelDraw();
 
-	void Draw();
-
-	void Releace();
+	// 解放処理
+	void ModelReleace();
 
 private:
 	ID3D11Device*				m_pDev;				/// デバイス

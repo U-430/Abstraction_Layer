@@ -2,7 +2,7 @@ struct VSInput
 {
 	float4 Position : POSITION0;	// 位置座標
 	float4 Color	: COLOR0;		// 頂点カラー
-	float2 TexCoord : TEXCOORD0;		// UV
+	float2 TexCoord : TEXCOORD;		// UV
 };
 
 struct VSOutput

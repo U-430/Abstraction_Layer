@@ -1,4 +1,10 @@
 #pragma once
+//==============================================================================
+// Filename: System_DirectX12.h
+// Description: DirectX12 System
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include <cstdint>
 #include <d3d12.h>
 #include <dxgi1_4.h>
@@ -21,24 +27,24 @@
 class SystemDirectX12 
 {
 public:
-	bool InitDX12(HWND hWnd);		// 初期化処理
-	void Release();					// 解放処理
-	void Render();					// 描画処理
+	bool SystemInit(HWND hWnd);		/// 初期化処理
+	void SystemRelease();			/// 解放処理
+	void SystemRender();			/// 描画処理
 
 	// 描画前処理
-	void BeforeRender();
-	void BeforeRender(float r, float g, float b);
+	void SystemBeforeRender();
+	void SystemBeforeRender(float r, float g, float b);
 
-	void AfterRender();				// 描画後処理
+	void SystemAfterRender();		/// 描画後処理
 
-	ID3D12Device* GetDevice();
-	ID3D12CommandQueue* GetQueue();
-	ID3D12GraphicsCommandList* GetCmdList();
-	uint32_t GetFrameIndex();
+	ID3D12Device*				SystemGetDevice();
+	ID3D12CommandQueue*			SystemGetQueue();
+	ID3D12GraphicsCommandList*	SystemGetCmdList();
+	uint32_t					SystemGetFrameIndex();
 
 private:
-	void WaitGPU();
-	void Present(uint32_t _interval);
+	void SystemWaitGPU();
+	void SystemPresent(uint32_t _interval);
 
 	ID3D12Device*				m_pDevice;						/// デバイス
 	ID3D12CommandQueue*			m_pQueue;						/// コマンドキュー

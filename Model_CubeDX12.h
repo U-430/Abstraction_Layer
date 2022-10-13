@@ -1,4 +1,10 @@
 #pragma once
+//==============================================================================
+// Filename: Model_CubeDX12.h
+// Description: CubeClass
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
 #include "System_DirectX12.h"
@@ -22,10 +28,17 @@ struct alignas(256) Transform
 class ModelCubeDX12 
 {
 public:
-	bool Init(ID3D12Device* device, ID3D12GraphicsCommandList* cmd);	// 初期化処理
-	void Update(uint32_t frameindex);	// 更新処理
-	void Draw();	// 描画処理
-	void Release();	// 解放処理
+	// 初期化処理
+	bool ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* cmd);
+
+	// 更新処理
+	void ModelUpdate(uint32_t frameindex);
+
+	// 描画処理
+	void ModelDraw();
+
+	// 解放処理
+	void ModelRelease();
 
 	void SetPos(float x);
 
