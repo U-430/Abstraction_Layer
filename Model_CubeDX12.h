@@ -1,7 +1,7 @@
 #pragma once
 //==============================================================================
 // Filename: Model_CubeDX12.h
-// Description: CubeClass
+// Description: CubeClass for DirectX12
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
@@ -23,6 +23,13 @@ struct alignas(256) Transform
 	DirectX::XMMATRIX World;	// ワールド行列
 	DirectX::XMMATRIX View;		// ビュー行列
 	DirectX::XMMATRIX Proj;		// 射影行列
+};
+
+struct Texture
+{
+	ID3D12Resource*					pResource;	// リソース
+	D3D12_CPU_DESCRIPTOR_HANDLE		HandleCPU;	// CPUディスクリプタハンドル
+	D3D12_GPU_DESCRIPTOR_HANDLE		HandleGPU;	// GPUディスクリプタハンドル
 };
 
 class ModelCubeDX12 
@@ -59,5 +66,7 @@ private:
 	D3D12_VIEWPORT					m_Viewport;			/// ビューポート
 	D3D12_RECT						m_Scissor;			/// シザー矩形
 	ConstantBufferView<Transform>	m_CBV[FRAME_COUNT];	/// 定数バッファビュー
+	Texture							m_Texture;			/// テクスチャデータ
+	
 	float							m_RotateAngle;		/// 回転角
 };

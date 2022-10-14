@@ -1,7 +1,7 @@
 #pragma once
 //==============================================================================
 // Filename: Model_CubeDX11.h
-// Description: CubeClass
+// Description: CubeClass for DirectX11
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 

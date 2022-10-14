@@ -35,6 +35,11 @@ template<typename T> void SafeRelease(T*& _ptr);
 //D3D12_CPU_DESCRIPTOR_HANDLE	        DirectX12::m_HandleRTV[FrameCount];
 //D3D12_CPU_DESCRIPTOR_HANDLE         DirectX12::m_HandleDSV;
 
+//--------------------------------------------- 
+/// \param[in] HWND (hWnd)
+/// 
+/// \return 
+//---------------------------------------------
 bool SystemDirectX12::SystemInit(HWND hWnd)
 {
 
@@ -375,6 +380,9 @@ bool SystemDirectX12::SystemInit(HWND hWnd)
     return true;
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX12::SystemRelease()
 {
     // GPU処理の完了を待機
@@ -425,6 +433,9 @@ void SystemDirectX12::SystemRelease()
     //m_pDevice.Reset();
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX12::SystemRender()
 {
     // コマンドの記録を開始
@@ -483,6 +494,9 @@ void SystemDirectX12::SystemRender()
     SystemPresent(1);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX12::SystemBeforeRender()
 {
     // コマンドの記録を開始
@@ -515,6 +529,12 @@ void SystemDirectX12::SystemBeforeRender()
     m_pCmdList->ClearDepthStencilView(m_HandleDSV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
+//--------------------------------------------- 
+/// \param[in] float (r)
+/// \param[in] float (g)
+/// \param[in] float (b)
+/// \return 
+//---------------------------------------------
 void SystemDirectX12::SystemBeforeRender(float r, float g, float b)
 {
     // コマンドの記録を開始
@@ -547,6 +567,9 @@ void SystemDirectX12::SystemBeforeRender(float r, float g, float b)
     m_pCmdList->ClearDepthStencilView(m_HandleDSV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX12::SystemAfterRender()
 {
     // リソースバリアの表示設定
@@ -573,26 +596,41 @@ void SystemDirectX12::SystemAfterRender()
     SystemPresent(1);
 }
 
+//--------------------------------------------- 
+/// \return ID3D12Device*
+//---------------------------------------------
 ID3D12Device* SystemDirectX12::SystemGetDevice()
 {
     return m_pDevice;
 }
 
+//--------------------------------------------- 
+/// \return ID3D12CommandQueue*
+//---------------------------------------------
 ID3D12CommandQueue* SystemDirectX12::SystemGetQueue()
 {
     return m_pQueue;
 }
 
+//--------------------------------------------- 
+/// \return ID3D12GraphicsCommandList*
+//---------------------------------------------
 ID3D12GraphicsCommandList* SystemDirectX12::SystemGetCmdList()
 {
     return m_pCmdList;
 }
 
+//--------------------------------------------- 
+/// \return uint32_t
+//---------------------------------------------
 uint32_t SystemDirectX12::SystemGetFrameIndex()
 {
     return m_FrameIndex;
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemDirectX12::SystemWaitGPU()
 {
    // assert(m_pQueue != nullptr);

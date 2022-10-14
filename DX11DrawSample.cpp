@@ -66,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         //g_CubeDX11.Draw();
         //g_DirectX11.SystemAfterRender();
 
-        //g_CubeDX12.Update(g_DirectX12.SystemGetFrameIndex());
+        //g_CubeDX12.ModelUpdate(g_DirectX12.SystemGetFrameIndex());
         g_DirectX12.SystemBeforeRender();
         g_CubeDX12.ModelDraw();
         g_DirectX12.SystemAfterRender();

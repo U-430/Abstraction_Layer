@@ -1,6 +1,6 @@
 //==============================================================================
 // Filename: Model_CubeDX11.cpp
-// Description: CubeClass
+// Description: CubeClass for DirectX11
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 

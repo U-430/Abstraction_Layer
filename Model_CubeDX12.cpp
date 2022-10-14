@@ -1,6 +1,6 @@
 //==============================================================================
 // Filename: Model_CubeDX12.cpp
-// Description: CubeClass
+// Description: CubeClass for DirectX12
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
@@ -15,12 +15,19 @@ struct Vertex
 {
 	XMFLOAT3 Position;
 	XMFLOAT4 Color;
+	XMFLOAT2 UV;
 };
 
-bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* cmd)
+//--------------------------------------------- 
+/// \param[in] ID3D12Device*(_device)
+/// \param[in] ID3D12GraphicsCommandList*(_cmd)
+/// 
+/// \return 
+//---------------------------------------------
+bool ModelCubeDX12::ModelInit(ID3D12Device* _device, ID3D12GraphicsCommandList* _cmd)
 {
-	m_pDev = device;
-	m_pCmd = cmd;
+	m_pDev = _device;
+	m_pCmd = _cmd;
 
 	// 頂点バッファの生成
 	{
@@ -28,35 +35,35 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 		Vertex vertices[]
 		{
 
-			{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
 
-			{DirectX::XMFLOAT3(0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3(0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3(0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3(0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
 
-			{DirectX::XMFLOAT3( 0.5f, -0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f,  0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f, -0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f,  0.5f, 0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
 
-			{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
 
-			{DirectX::XMFLOAT3(-0.5f, 0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f, 0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f, 0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f, 0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
 
-			{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f)},
-			{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
+		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
+		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
 
 		};
 
@@ -308,20 +315,50 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 		flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
 
 		// ルートパラメータの設定
-		D3D12_ROOT_PARAMETER param = {};
+		D3D12_ROOT_PARAMETER param[2] = {};
 
-		param.ParameterType				= D3D12_ROOT_PARAMETER_TYPE_CBV;
-		param.Descriptor.ShaderRegister = 0;
-		param.Descriptor.RegisterSpace	= 0;
-		param.ShaderVisibility			= D3D12_SHADER_VISIBILITY_VERTEX;
+		param[0].ParameterType				= D3D12_ROOT_PARAMETER_TYPE_CBV;
+		param[0].Descriptor.ShaderRegister	= 0;
+		param[0].Descriptor.RegisterSpace	= 0;
+		param[0].ShaderVisibility			= D3D12_SHADER_VISIBILITY_VERTEX;
+
+		D3D12_DESCRIPTOR_RANGE range = {};
+
+		range.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+		range.NumDescriptors = 1;
+		range.BaseShaderRegister = 0;
+		range.RegisterSpace = 0;
+		range.OffsetInDescriptorsFromTableStart = 0;
+
+		param[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+		param[1].DescriptorTable.NumDescriptorRanges = 1;
+		param[1].DescriptorTable.pDescriptorRanges = &range;
+		param[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+		// スタティックサンプラーの設定
+		D3D12_STATIC_SAMPLER_DESC sampler = {};
+
+		sampler.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+		sampler.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		sampler.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		sampler.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		sampler.MipLODBias = D3D12_DEFAULT_MIP_LOD_BIAS;
+		sampler.MaxAnisotropy = 1;
+		sampler.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+		sampler.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+		sampler.MinLOD = -D3D12_FLOAT32_MAX;
+		sampler.MaxLOD = +D3D12_FLOAT32_MAX;
+		sampler.ShaderRegister = 0;
+		sampler.RegisterSpace = 0;
+		sampler.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
 		// ルートシグネイチャの設定
 		D3D12_ROOT_SIGNATURE_DESC desc = {};
 
-		desc.NumParameters		= 1;
-		desc.NumStaticSamplers	= 0;
-		desc.pParameters		= &param;
-		desc.pStaticSamplers	= nullptr;
+		desc.NumParameters		= 2;
+		desc.NumStaticSamplers	= 1;
+		desc.pParameters		= param;
+		desc.pStaticSamplers	= &sampler;
 		desc.Flags				= flag;
 
 		ID3DBlob* pBlob;
@@ -355,7 +392,7 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 	// パイプラインステートの生成
 	{
 		// 入力レイアウトの設定
-		D3D12_INPUT_ELEMENT_DESC element[2];
+		D3D12_INPUT_ELEMENT_DESC element[3];
 
 		element[0].SemanticName			= "POSITION";
 		element[0].SemanticIndex		= 0;
@@ -372,6 +409,14 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 		element[1].AlignedByteOffset	= D3D12_APPEND_ALIGNED_ELEMENT;
 		element[1].InputSlotClass		= D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
 		element[1].InstanceDataStepRate = 0;
+
+		element[2].SemanticName			= "TEXCOORD";
+		element[2].SemanticIndex		= 0;
+		element[2].Format				= DXGI_FORMAT_R32G32_FLOAT;
+		element[2].InputSlot			= 0;
+		element[2].AlignedByteOffset	= D3D12_APPEND_ALIGNED_ELEMENT;
+		element[2].InputSlotClass		= D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+		element[2].InstanceDataStepRate = 0;
 
 		// ラスタライザーステートの設定
 		D3D12_RASTERIZER_DESC descRS;
@@ -421,7 +466,7 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 		ID3DBlob* pPSBlob;
 
 		// 頂点シェーダ読み込み
-		auto hr = D3DReadFileToBlob(L"shader/SimpleVS.cso", &pVSBlob);
+		auto hr = D3DReadFileToBlob(L"shader/SimpleTexVS.cso", &pVSBlob);
 
 		if (FAILED(hr))
 		{
@@ -429,7 +474,7 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 		}
 
 		// ピクセルシェーダ読み込み
-		hr = D3DReadFileToBlob(L"shader/SimplePS.cso", &pPSBlob);
+		hr = D3DReadFileToBlob(L"shader/SimpleTexPS.cso", &pPSBlob);
 
 		if (FAILED(hr))
 		{
@@ -482,9 +527,107 @@ bool ModelCubeDX12::ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* c
 		m_Scissor.bottom	= SCREEN_HEIGHT;
 	}
 
+	// テクスチャの生成
+	{
+		D3D12_RESOURCE_DESC texDesc;
+		D3D12_HEAP_PROPERTIES heapProp;
+		const UINT64 k_Width = 32;
+
+		ZeroMemory(&texDesc, sizeof(texDesc));
+		ZeroMemory(&heapProp, sizeof(heapProp));
+
+		// テクスチャの準備
+		heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+		heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+		heapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+		heapProp.CreationNodeMask = 0;
+		heapProp.VisibleNodeMask = 0;
+
+		texDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+		texDesc.Width = k_Width;
+		texDesc.Height = k_Width;
+		texDesc.DepthOrArraySize = 1;
+		texDesc.MipLevels = 1;
+		texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+		texDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+		texDesc.SampleDesc.Count = 1;
+		texDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+
+		auto hr = m_pDev->CreateCommittedResource(
+			&heapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&texDesc,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&m_Texture.pResource));
+
+		if (FAILED(hr))
+		{
+			return false;
+		}
+
+		// テクスチャ更新
+		D3D12_BOX box = { 0 };
+		box.right = k_Width;
+		box.bottom = k_Width;
+		box.back = 1;
+		uint32_t* p = (uint32_t*)malloc(k_Width * k_Width * sizeof(uint32_t));
+
+		for (int i = 0; i < k_Width * k_Width; ++i)
+		{
+			if (i < (k_Width * k_Width) / 2)
+			{
+				//       A B G R
+				p[i] = 0xFFFFFFFF;
+			}
+			else
+			{
+				//       A B G R
+				p[i] = 0xFFFFFF00;
+			}
+		}
+
+		m_Texture.pResource->WriteToSubresource(0, &box, p, 4 * k_Width, 4 * k_Width * k_Width);
+
+		// インクリメントサイズを取得
+		auto incrementSize = m_pDev->GetDescriptorHandleIncrementSize(
+			D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+		// CPUディスクリプタハンドルとGPUディスクリプタハンドルを取得
+		auto handleCPU = m_pHeapCBV->GetCPUDescriptorHandleForHeapStart();
+		auto handleGPU = m_pHeapCBV->GetGPUDescriptorHandleForHeapStart();
+
+		handleCPU.ptr += incrementSize * 1;
+		handleGPU.ptr += incrementSize * 1;
+
+		m_Texture.HandleCPU = handleCPU;
+		m_Texture.HandleGPU = handleGPU;
+
+		// テクスチャの構成設定を取得
+		auto textureDesc = m_Texture.pResource->GetDesc();
+
+		// シェーダーリソースビューの設定
+		D3D12_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
+
+		viewDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+		viewDesc.Format = textureDesc.Format;
+		viewDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+		viewDesc.Texture2D.MostDetailedMip = 0;
+		viewDesc.Texture2D.MipLevels = textureDesc.MipLevels;
+		viewDesc.Texture2D.PlaneSlice = 0;
+		viewDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+
+		// シェーダーリソースビューを生成
+		m_pDev->CreateShaderResourceView(
+			m_Texture.pResource, &viewDesc, handleCPU);
+	}
 	return true;
 }
 
+//--------------------------------------------- 
+/// \param[in] uint32_t (frameindex)
+/// \return 
+//---------------------------------------------
 void ModelCubeDX12::ModelUpdate(uint32_t frameindex)
 {
 	m_FrameIndex = frameindex;
@@ -493,11 +636,15 @@ void ModelCubeDX12::ModelUpdate(uint32_t frameindex)
 	m_CBV[m_FrameIndex].pBuffer->World = XMMatrixRotationY(m_RotateAngle);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void ModelCubeDX12::ModelDraw()
 {
 	m_pCmd->SetGraphicsRootSignature(m_pRootSignature);
 	m_pCmd->SetDescriptorHeaps(1, &m_pHeapCBV);
 	m_pCmd->SetGraphicsRootConstantBufferView(0, m_CBV[m_FrameIndex].Desc.BufferLocation);
+	m_pCmd->SetGraphicsRootDescriptorTable(1, m_Texture.HandleGPU);
 	m_pCmd->SetPipelineState(m_pPSO);
 
 	m_pCmd->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -509,6 +656,9 @@ void ModelCubeDX12::ModelDraw()
 	m_pCmd->DrawIndexedInstanced(36, 1, 0, 0, 0);
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void ModelCubeDX12::ModelRelease()
 {
 	for (auto i = 0; i < FRAME_COUNT; ++i)
