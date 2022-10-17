@@ -11,6 +11,12 @@
 
 #define MAX_LOADSTRING 100
 
+enum VERSION
+{
+    DIRECTX11,
+    DIRECTX12
+};
+
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
@@ -23,10 +29,12 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 // グローバル変数
-SystemDirectX11 g_DirectX11;    /// DirectX11クラス
-SystemDirectX12 g_DirectX12;    /// DirectX12クラス
-ModelCubeDX11   g_CubeDX11;     /// CubeDX11クラス
-ModelCubeDX12   g_CubeDX12;     /// CubeDX12クラス
+VERSION         g_SystemVersion = DIRECTX12;    /// 描画のバージョン
+
+SystemDirectX11 g_DirectX11;                    /// DirectX11クラス
+SystemDirectX12 g_DirectX12;                    /// DirectX12クラス
+ModelCubeDX11   g_CubeDX11;                     /// CubeDX11クラス
+ModelCubeDX12   g_CubeDX12;                     /// CubeDX12クラス
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -62,21 +70,42 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        //g_DirectX11.SystemBeforeRender();
-        //g_CubeDX11.Draw();
-        //g_DirectX11.SystemAfterRender();
+        switch (g_SystemVersion)
+        {
+        case DIRECTX11:
+            g_DirectX11.SystemBeforeRender();
+            g_CubeDX11.ModelDraw();
+            g_DirectX11.SystemAfterRender();
 
-        //g_CubeDX12.ModelUpdate(g_DirectX12.SystemGetFrameIndex());
-        g_DirectX12.SystemBeforeRender();
-        g_CubeDX12.ModelDraw();
-        g_DirectX12.SystemAfterRender();
+            break;
+        case DIRECTX12:
+            //g_CubeDX12.ModelUpdate(g_DirectX12.SystemGetFrameIndex());
+            g_DirectX12.SystemBeforeRender();
+            g_CubeDX12.ModelDraw();
+            g_DirectX12.SystemAfterRender();
 
+            break;
+        default:
+            break;
+        }
     }
 
-    //g_CubeDX11.Releace();
-    //g_DirectX11.SystemRelease();
-    g_CubeDX12.ModelRelease();
-    g_DirectX12.SystemRelease();
+    switch (g_SystemVersion)
+    {
+    case DIRECTX11:
+        g_CubeDX11.ModelReleace();
+        g_DirectX11.SystemRelease();
+
+        break;
+    case DIRECTX12:
+        g_CubeDX12.ModelRelease();
+        g_DirectX12.SystemRelease();
+
+        break;
+    default:
+        break;
+    }
+
     return (int) msg.wParam;
 }
 
@@ -133,28 +162,38 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   //if (g_DirectX11.SystemInit(hWnd))
-   //{
-   //    if (!g_CubeDX11.Init(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
-   //    {
-   //        return FALSE;
-   //    }
-   //}
-   //else
-   //{
-   //    return FALSE;
-   //}
-
-   if (g_DirectX12.SystemInit(hWnd))
+   // バージョン選択
+   switch (g_SystemVersion)
    {
-       if (!g_CubeDX12.ModelInit(g_DirectX12.SystemGetDevice(), g_DirectX12.SystemGetCmdList()))
+   case DIRECTX11:
+       if (g_DirectX11.SystemInit(hWnd))
+       {
+           if (!g_CubeDX11.ModelInit(g_DirectX11.SystemGetDevice(), g_DirectX11.SystemGetDeviceContext()))
+           {
+               return FALSE;
+           }
+       }
+       else
        {
            return FALSE;
        }
-   }
-   else
-   {
+       break;
+   case DIRECTX12:
+       if (g_DirectX12.SystemInit(hWnd))
+       {
+           if (!g_CubeDX12.ModelInit(g_DirectX12.SystemGetDevice(), g_DirectX12.SystemGetCmdList()))
+           {
+               return FALSE;
+           }
+       }
+       else
+       {
+           return FALSE;
+       }
+       break;
+   default:
        return FALSE;
+       break;
    }
 
    ShowWindow(hWnd, nCmdShow);

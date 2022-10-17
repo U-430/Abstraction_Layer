@@ -13,51 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{7047d0c9-ce16-482d-8f46-a877b20e29ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Model">
+      <UniqueIdentifier>{ed0e6100-940d-4fd5-b112-789f26530f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\WindowsApp">
+      <UniqueIdentifier>{e2c9dae0-a39c-4a69-a40e-484e7441d9c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Model">
+      <UniqueIdentifier>{69fc9a85-ba7f-48c9-b6c8-dc67ee553811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{08ea5415-d056-4db2-912b-813114c6a6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\WindowsApp">
+      <UniqueIdentifier>{bf739394-3b9b-4e1b-9b16-800df587b00c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11DrawSample.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="System_DirectX11.h">
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="System_ScreenSize.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Model_CubeDX11.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="System_DirectX11.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="System_DirectX12.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Model_CubeDX11.h">
+      <Filter>ヘッダー ファイル\Model</Filter>
     </ClInclude>
     <ClInclude Include="Model_CubeDX12.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11DrawSample.h">
+      <Filter>ヘッダー ファイル\WindowsApp</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>ヘッダー ファイル\WindowsApp</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>ヘッダー ファイル\WindowsApp</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>ヘッダー ファイル\WindowsApp</Filter>
+    </ClInclude>
+    <ClInclude Include="System_Layer.h">
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DX11DrawSample.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="System_DirectX11.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Model_CubeDX11.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="System_DirectX12.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Model</Filter>
     </ClCompile>
     <ClCompile Include="Model_CubeDX12.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="System_DirectX11.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System_DirectX12.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11DrawSample.cpp">
+      <Filter>ソース ファイル\WindowsApp</Filter>
+    </ClCompile>
+    <ClCompile Include="System_Layer.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
