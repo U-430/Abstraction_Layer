@@ -63,6 +63,12 @@
     <ClInclude Include="System_Layer.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
+    <ClInclude Include="Model_Cube.h">
+      <Filter>ヘッダー ファイル\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="System_Scene.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Model_CubeDX11.cpp">
@@ -80,7 +86,7 @@
     <ClCompile Include="DX11DrawSample.cpp">
       <Filter>ソース ファイル\WindowsApp</Filter>
     </ClCompile>
-    <ClCompile Include="System_Layer.cpp">
+    <ClCompile Include="System_Scene.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>

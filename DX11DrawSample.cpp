@@ -4,7 +4,7 @@
 #include "framework.h"
 #include "DX11DrawSample.h"
 #include "System_ScreenSize.h"
-#include "System_Layer.h"
+#include "System_Scene.h"
 
 #define MAX_LOADSTRING 100
 
@@ -21,7 +21,7 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 // グローバル変数
-SystemLayer     g_Layer;
+SystemScene     g_Scene;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -57,11 +57,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        g_Layer.Draw();
+        g_Scene.SystemDraw();
     }
 
 
-    g_Layer.Release();
+    g_Scene.SystemRelease();
     return (int) msg.wParam;
 }
 
@@ -118,7 +118,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   if (!g_Layer.Init(hWnd))
+   if (!g_Scene.SystemInit(hWnd))
    {
        return FALSE;
    }

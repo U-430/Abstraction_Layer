@@ -5,13 +5,14 @@
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
+#include "System_Layer.h"
 #include <d3d11.h>
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
 
-class SystemDirectX11
+class SystemDirectX11 : public SystemLayer
 {
 public:
 	bool SystemInit(HWND hWnd);

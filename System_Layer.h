@@ -5,34 +5,21 @@
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
-#include "System_DirectX11.h"
-#include "System_DirectX12.h"
-#include "Model_CubeDX11.h"
-#include "Model_CubeDX12.h"
-
-enum VERSION
-{
-	DIRECTX11,
-	DIRECTX12
-};
+#include <Windows.h>
 
 class SystemLayer
 {
 public:
 
-	bool Init(HWND _hwnd);
+	virtual bool SystemInit() { return true; };
 
-	void Draw();
+	virtual bool SystemInit(HWND _hwnd) { return true; };
 
-	void Release();
-private:
+	virtual void SystemBeforeRender() {};
 
-	SystemDirectX11	m_DirectX11;					/// DirectX11クラス
-	SystemDirectX12	m_DirectX12;					/// DirectX12クラス
+	virtual void SystemBeforeRender(float r, float g, float b, float a) {};
 
-	ModelCubeDX11	m_CubeDX11;						/// キューブ(DX11)クラス
-	ModelCubeDX12	m_CubeDX12;						/// キューブ(DX12)クラス
+	virtual void SystemAfterRender() {};
 
-	HWND			m_Hwnd;							/// HWND
-	VERSION			m_SystemVersion = DIRECTX11;	/// 描画のバージョン
+	virtual void SystemRelease() {};
 };

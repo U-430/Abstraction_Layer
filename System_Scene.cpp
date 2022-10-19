@@ -1,8 +1,8 @@
-#include "System_Layer.h"
+#include "System_Scene.h"
 
-bool SystemLayer::Init(HWND _hwnd)
+bool SystemScene::SystemInit(HWND _hwnd)
 {
-	m_Hwnd = _hwnd;
+    m_Hwnd = _hwnd;
 
     // バージョン選択
     switch (m_SystemVersion)
@@ -41,7 +41,7 @@ bool SystemLayer::Init(HWND _hwnd)
     return true;
 }
 
-void SystemLayer::Draw()
+void SystemScene::SystemDraw()
 {
     switch (m_SystemVersion)
     {
@@ -63,7 +63,7 @@ void SystemLayer::Draw()
     }
 }
 
-void SystemLayer::Release()
+void SystemScene::SystemRelease()
 {
     switch (m_SystemVersion)
     {

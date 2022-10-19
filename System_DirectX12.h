@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <d3d12.h>
 #include <dxgi1_4.h>
+#include "System_Layer.h"
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -24,7 +25,7 @@
 /// <summary>
 /// DirectX12ƒNƒ‰ƒX
 /// </summary>
-class SystemDirectX12 
+class SystemDirectX12 : public SystemLayer
 {
 public:
 	bool SystemInit(HWND hWnd);		/// ‰Šú‰»ˆ—
