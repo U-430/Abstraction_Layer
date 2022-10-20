@@ -1,7 +1,7 @@
 #pragma once
 //==============================================================================
-// Filename: System_DirectX12.h
-// Description: DirectX12 System
+// Filename: System_Layer.h
+// Description: Layer System
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 

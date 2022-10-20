@@ -8,6 +8,7 @@
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
 #include "System_DirectX12.h"
+//#include "Model_Cube.h"
 
 template<typename T>
 struct ConstantBufferView

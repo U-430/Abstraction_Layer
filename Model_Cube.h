@@ -1,9 +1,17 @@
 #pragma once
 
+//==============================================================================
+// Filename: Model_Cube.h
+// Description: CubeClass for Layer
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include <d3d11.h>
 #include <d3d12.h>
 #include <dxgi1_4.h>
 #include <DirectXMath.h>
+
+#include "System_Layer.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -25,9 +33,10 @@ struct Vertex
 class ModelCube
 {
 public:
-	virtual bool ModelInit(ID3D11Device* _device, ID3D11DeviceContext* _context) { return true; };
-
-	virtual bool ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* cmd) { return true; };
+	virtual bool ModelInit(SystemLayer* layer) 
+	{
+		return true; 
+	};
 
 	virtual void ModelDraw() {};
 

@@ -1,8 +1,8 @@
 #pragma once
 
 //==============================================================================
-// Filename: System_DirectX12.h
-// Description: DirectX12 System
+// Filename: System_Scene.h
+// Description: Scene System
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 

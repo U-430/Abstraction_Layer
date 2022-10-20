@@ -8,9 +8,12 @@ bool SystemScene::SystemInit(HWND _hwnd)
     switch (m_SystemVersion)
     {
     case DIRECTX11:
-        if (m_DirectX11.SystemInit(m_Hwnd))
+        m_pLayer = new SystemDirectX11();
+
+        if (m_pLayer->SystemInit(m_Hwnd))
         {
-            if (!m_CubeDX11.ModelInit(m_DirectX11.SystemGetDevice(), m_DirectX11.SystemGetDeviceContext()))
+            auto work = (SystemDirectX11*)m_pLayer;
+            if (!m_CubeDX11.ModelInit(work->SystemGetDevice(), work->SystemGetDeviceContext()))
             {
                 return false;
             }
@@ -21,9 +24,12 @@ bool SystemScene::SystemInit(HWND _hwnd)
         }
         break;
     case DIRECTX12:
-        if (m_DirectX12.SystemInit(m_Hwnd))
+        m_pLayer = new SystemDirectX12();
+
+        if (m_pLayer->SystemInit(m_Hwnd))
         {
-            if (!m_CubeDX12.ModelInit(m_DirectX12.SystemGetDevice(), m_DirectX12.SystemGetCmdList()))
+            auto work = (SystemDirectX12*)m_pLayer;
+            if (!m_CubeDX12.ModelInit(work->SystemGetDevice(), work->SystemGetCmdList()))
             {
                 return false;
             }
@@ -43,24 +49,24 @@ bool SystemScene::SystemInit(HWND _hwnd)
 
 void SystemScene::SystemDraw()
 {
+    m_pLayer->SystemBeforeRender();
+
     switch (m_SystemVersion)
     {
     case DIRECTX11:
-        m_DirectX11.SystemBeforeRender();
         m_CubeDX11.ModelDraw();
-        m_DirectX11.SystemAfterRender();
 
         break;
     case DIRECTX12:
         //m_CubeDX12.ModelUpdate(m_DirectX12.SystemmetFrameIndex());
-        m_DirectX12.SystemBeforeRender();
         m_CubeDX12.ModelDraw();
-        m_DirectX12.SystemAfterRender();
 
         break;
     default:
         break;
     }
+
+    m_pLayer->SystemAfterRender();
 }
 
 void SystemScene::SystemRelease()
@@ -69,15 +75,16 @@ void SystemScene::SystemRelease()
     {
     case DIRECTX11:
         m_CubeDX11.ModelReleace();
-        m_DirectX11.SystemRelease();
 
         break;
     case DIRECTX12:
         m_CubeDX12.ModelRelease();
-        m_DirectX12.SystemRelease();
 
         break;
     default:
         break;
     }
+
+    m_pLayer->SystemRelease();
+    delete m_pLayer;
 }
