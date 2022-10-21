@@ -11,8 +11,6 @@
 
 #pragma comment (lib, "d3dcompiler.lib")
 
-#define VERTEX_NUM 24
-
 struct Vertex
 {
 	DirectX::XMFLOAT3 pos;
@@ -33,7 +31,7 @@ struct ConstantBuffer
 /// 
 /// \return 
 //---------------------------------------------
-bool ModelCubeDX11::ModelInit(ID3D11Device* _device, ID3D11DeviceContext* _context)
+bool ModelCubeDX11::ModelInit(SystemLayer* layer)
 {
 	HRESULT hr = S_OK;
 
@@ -41,8 +39,10 @@ bool ModelCubeDX11::ModelInit(ID3D11Device* _device, ID3D11DeviceContext* _conte
 	ID3DBlob* pBlobPS = nullptr;
 	ID3DBlob* pErrorBlob = nullptr;
 
-	m_pDev = _device;
-	m_pContext = _context;
+	auto work = (SystemDirectX11*)layer;
+
+	m_pDev = work->SystemGetDevice();
+	m_pContext = work->SystemGetDeviceContext();
 
 	Vertex v[] =
 	{

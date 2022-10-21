@@ -6,7 +6,7 @@
 
 #include "Model_CubeDX12.h"
 #include "System_ScreenSize.h"
-#include <iostream>
+#include <d3dcompiler.h>
 
 using namespace std;
 using namespace DirectX;
@@ -24,10 +24,12 @@ struct Vertex
 /// 
 /// \return 
 //---------------------------------------------
-bool ModelCubeDX12::ModelInit(ID3D12Device* _device, ID3D12GraphicsCommandList* _cmd)
+bool ModelCubeDX12::ModelInit(SystemLayer* layer)
 {
-	m_pDev = _device;
-	m_pCmd = _cmd;
+	auto work = (SystemDirectX12*)layer;
+
+	m_pDev = work->SystemGetDevice();
+	m_pCmd = work->SystemGetCmdList();
 
 	// 頂点バッファの生成
 	{

@@ -5,18 +5,15 @@
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
-#include <d3d11.h>
-//#include "Model_Cube.h"
+#include "System_DirectX11.h"
+#include "Model_Cube.h"
 
-#pragma comment(lib, "d3d11.lib")
 
-#define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
-
-class ModelCubeDX11
+class ModelCubeDX11 : public ModelCube
 {
 public:
 	// ‰Šú‰»ˆ—
-	bool ModelInit(ID3D11Device* _device, ID3D11DeviceContext* _context);
+	bool ModelInit(SystemLayer* layer);
 
 	// •`‰æˆ—
 	void ModelDraw();

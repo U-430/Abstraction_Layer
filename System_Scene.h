@@ -17,7 +17,8 @@
 enum VERSION
 {
 	DIRECTX11,
-	DIRECTX12
+	DIRECTX12,
+	OPENGL
 };
 
 class SystemScene
@@ -30,12 +31,6 @@ public:
 
 	void SystemRelease();
 private:
-
-	SystemDirectX11	m_DirectX11;					/// DirectX11クラス
-	SystemDirectX12	m_DirectX12;					/// DirectX12クラス
-
-	ModelCubeDX11	m_CubeDX11;						/// キューブ(DX11)クラス
-	ModelCubeDX12	m_CubeDX12;						/// キューブ(DX12)クラス
 
 	SystemLayer*	m_pLayer;						/// Layerクラス
 	ModelCube*		m_pCube;						/// キューブクラス

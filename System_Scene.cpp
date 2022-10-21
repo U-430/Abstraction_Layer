@@ -1,5 +1,16 @@
+//==============================================================================
+// Filename: System_Scene.cpp
+// Description: Scene System
+// Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
+//==============================================================================
+
 #include "System_Scene.h"
 
+//--------------------------------------------- 
+/// \param[in] HWND(_hwnd)
+/// 
+/// \return 
+//---------------------------------------------
 bool SystemScene::SystemInit(HWND _hwnd)
 {
     m_Hwnd = _hwnd;
@@ -9,82 +20,60 @@ bool SystemScene::SystemInit(HWND _hwnd)
     {
     case DIRECTX11:
         m_pLayer = new SystemDirectX11();
+        m_pCube = new ModelCubeDX11();
 
-        if (m_pLayer->SystemInit(m_Hwnd))
-        {
-            auto work = (SystemDirectX11*)m_pLayer;
-            if (!m_CubeDX11.ModelInit(work->SystemGetDevice(), work->SystemGetDeviceContext()))
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
         break;
     case DIRECTX12:
         m_pLayer = new SystemDirectX12();
+        m_pCube = new ModelCubeDX12();
 
-        if (m_pLayer->SystemInit(m_Hwnd))
-        {
-            auto work = (SystemDirectX12*)m_pLayer;
-            if (!m_CubeDX12.ModelInit(work->SystemGetDevice(), work->SystemGetCmdList()))
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        break;
+
+    case OPENGL:
         break;
     default:
         return false;
         break;
     }
 
+    // レイヤー初期化
+    if (m_pLayer->SystemInit(m_Hwnd))
+    {
+        // キューブ初期化
+        if (!m_pCube->ModelInit(m_pLayer))
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
     return true;
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemScene::SystemDraw()
 {
     m_pLayer->SystemBeforeRender();
 
-    switch (m_SystemVersion)
-    {
-    case DIRECTX11:
-        m_CubeDX11.ModelDraw();
-
-        break;
-    case DIRECTX12:
-        //m_CubeDX12.ModelUpdate(m_DirectX12.SystemmetFrameIndex());
-        m_CubeDX12.ModelDraw();
-
-        break;
-    default:
-        break;
-    }
+    m_pCube->ModelDraw();
 
     m_pLayer->SystemAfterRender();
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemScene::SystemRelease()
 {
-    switch (m_SystemVersion)
-    {
-    case DIRECTX11:
-        m_CubeDX11.ModelReleace();
 
-        break;
-    case DIRECTX12:
-        m_CubeDX12.ModelRelease();
-
-        break;
-    default:
-        break;
-    }
-
+    m_pCube->ModelRelease();
     m_pLayer->SystemRelease();
+
+    delete m_pCube;
     delete m_pLayer;
 }

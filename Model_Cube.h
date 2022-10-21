@@ -1,33 +1,22 @@
 #pragma once
-
 //==============================================================================
 // Filename: Model_Cube.h
 // Description: CubeClass for Layer
 // Copyright (C) Silicon Studio Co., Ltd. All rights reserved.
 //==============================================================================
 
-#include <d3d11.h>
-#include <d3d12.h>
-#include <dxgi1_4.h>
-#include <DirectXMath.h>
-
 #include "System_Layer.h"
 
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "d3d12.lib")
-#pragma comment(lib, "dxgi.lib")
-#pragma comment(lib, "dxguid.lib")
-#pragma comment(lib, "d3dcompiler.lib")
 
 #define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
 #define VERTEX_NUM 24
 #define INDEX_NUM 36
 
-struct Vertex
+struct VertexData
 {
-	DirectX::XMFLOAT3 pos;
-	DirectX::XMFLOAT4 color;
-	DirectX::XMFLOAT2 tex;
+	float pos[3];	// x, y, z
+	float color[4];	// r, g, b, a
+	float uv[2];	// u, v
 };
 
 class ModelCube
@@ -43,40 +32,43 @@ public:
 	virtual void ModelRelease() {};
 
 private:
-	Vertex v[VERTEX_NUM] =
+	
+	/// 頂点データ
+	VertexData m_V[VERTEX_NUM] =
 	{
-		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{(-0.5f, -0.5f, -0.5f), (1.0f, 1.0f, 1.0f, 1.0f), (0.0f, 1.0f)},
+		{(-0.5f,  0.5f, -0.5f), (1.0f, 1.0f, 1.0f, 1.0f), (0.0f, 0.0f)},
+		{( 0.5f, -0.5f, -0.5f), (1.0f, 1.0f, 1.0f, 1.0f), (1.0f, 1.0f)},
+		{( 0.5f,  0.5f, -0.5f), (1.0f, 1.0f, 1.0f, 1.0f), (1.0f, 0.0f)},
 
-		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{( 0.5f, -0.5f, -0.5f), (1.0f, 0.0f, 0.0f, 1.0f), (0.0f, 1.0f)},
+		{( 0.5f,  0.5f, -0.5f), (1.0f, 0.0f, 0.0f, 1.0f), (0.0f, 0.0f)},
+		{( 0.5f, -0.5f,  0.5f), (1.0f, 0.0f, 0.0f, 1.0f), (1.0f, 1.0f)},
+		{( 0.5f,  0.5f,  0.5f), (1.0f, 0.0f, 0.0f, 1.0f), (1.0f, 0.0f)},
 
-		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{( 0.5f, -0.5f,  0.5f), (0.0f, 1.0f, 0.0f, 1.0f), (0.0f, 1.0f)},
+		{( 0.5f,  0.5f,  0.5f), (0.0f, 1.0f, 0.0f, 1.0f), (0.0f, 0.0f)},
+		{(-0.5f, -0.5f,  0.5f), (0.0f, 1.0f, 0.0f, 1.0f), (1.0f, 1.0f)},
+		{(-0.5f,  0.5f,  0.5f), (0.0f, 1.0f, 0.0f, 1.0f), (1.0f, 0.0f)},
 
-		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{(-0.5f, -0.5f,  0.5f), (0.0f, 0.0f, 1.0f, 1.0f), (0.0f, 1.0f)},
+		{(-0.5f,  0.5f,  0.5f), (0.0f, 0.0f, 1.0f, 1.0f), (0.0f, 0.0f)},
+		{(-0.5f, -0.5f, -0.5f), (0.0f, 0.0f, 1.0f, 1.0f), (1.0f, 1.0f)},
+		{(-0.5f,  0.5f, -0.5f), (0.0f, 0.0f, 1.0f, 1.0f), (1.0f, 0.0f)},
 
-		{DirectX::XMFLOAT3(-0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(-0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f,  0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{(-0.5f,  0.5f,  0.5f), (1.0f, 1.0f, 0.0f, 1.0f), (0.0f, 1.0f)},
+		{( 0.5f,  0.5f,  0.5f), (1.0f, 1.0f, 0.0f, 1.0f), (0.0f, 0.0f)},
+		{(-0.5f,  0.5f, -0.5f), (1.0f, 1.0f, 0.0f, 1.0f), (1.0f, 1.0f)},
+		{( 0.5f,  0.5f, -0.5f), (1.0f, 1.0f, 0.0f, 1.0f), (1.0f, 0.0f)},
 
-		{DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 1.0f)},
-		{DirectX::XMFLOAT3(-0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3( 0.5f, -0.5f, -0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 1.0f)},
-		{DirectX::XMFLOAT3( 0.5f, -0.5f,  0.5f), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT2(1.0f, 0.0f)},
+		{(-0.5f, -0.5f, -0.5f), (1.0f, 0.0f, 1.0f, 1.0f), (0.0f, 1.0f)},
+		{(-0.5f, -0.5f,  0.5f), (1.0f, 0.0f, 1.0f, 1.0f), (0.0f, 0.0f)},
+		{( 0.5f, -0.5f, -0.5f), (1.0f, 0.0f, 1.0f, 1.0f), (1.0f, 1.0f)},
+		{( 0.5f, -0.5f,  0.5f), (1.0f, 0.0f, 1.0f, 1.0f), (1.0f, 0.0f)},
 	};
 
-	WORD indexList[INDEX_NUM] = 
+	/// インデックスリスト 
+	WORD m_IndexList[INDEX_NUM] = 
 	{
 		0, 1, 2, 3, 2, 1,
 		4, 5, 6, 7, 6, 5,

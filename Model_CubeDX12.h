@@ -6,9 +6,8 @@
 //==============================================================================
 
 #include <DirectXMath.h>
-#include <d3dcompiler.h>
 #include "System_DirectX12.h"
-//#include "Model_Cube.h"
+#include "Model_Cube.h"
 
 template<typename T>
 struct ConstantBufferView
@@ -19,6 +18,7 @@ struct ConstantBufferView
 	T*								pBuffer;	// バッファ先頭へのポインタ
 };
 
+/// 行列情報
 struct alignas(256) Transform
 {
 	DirectX::XMMATRIX World;	// ワールド行列
@@ -26,6 +26,7 @@ struct alignas(256) Transform
 	DirectX::XMMATRIX Proj;		// 射影行列
 };
 
+/// テクスチャデータ
 struct Texture
 {
 	ID3D12Resource*					pResource;	// リソース
@@ -33,11 +34,11 @@ struct Texture
 	D3D12_GPU_DESCRIPTOR_HANDLE		HandleGPU;	// GPUディスクリプタハンドル
 };
 
-class ModelCubeDX12 
+class ModelCubeDX12 : public ModelCube
 {
 public:
 	// 初期化処理
-	bool ModelInit(ID3D12Device* device, ID3D12GraphicsCommandList* cmd);
+	bool ModelInit(SystemLayer* layer);
 
 	// 更新処理
 	void ModelUpdate(uint32_t frameindex);
@@ -51,16 +52,16 @@ public:
 	void SetPos(float x);
 
 private:
-	ID3D12DescriptorHeap*	m_pHeapCBV;			/// ディスクリプタヒープ(定数バッファービュー等)
-	ID3D12Resource*			m_pIB;				/// インデックスバッファ
-	ID3D12Resource*			m_pVB;				/// 頂点バッファ
-	ID3D12Resource*			m_pCB[FRAME_COUNT];	/// 定数バッファ
-	ID3D12RootSignature*	m_pRootSignature;	/// ルートシグネイチャ
-	ID3D12PipelineState*	m_pPSO;				/// パイプラインステート
+	ID3D12DescriptorHeap*			m_pHeapCBV;			/// ディスクリプタヒープ(定数バッファービュー等)
+	ID3D12Resource*					m_pIB;				/// インデックスバッファ
+	ID3D12Resource*					m_pVB;				/// 頂点バッファ
+	ID3D12Resource*					m_pCB[FRAME_COUNT];	/// 定数バッファ
+	ID3D12RootSignature*			m_pRootSignature;	/// ルートシグネイチャ
+	ID3D12PipelineState*			m_pPSO;				/// パイプラインステート
 
-	ID3D12Device*				m_pDev;				/// デバイス
-	ID3D12GraphicsCommandList*	m_pCmd;				/// コマンドリスト
-	uint32_t					m_FrameIndex;		/// フレーム番号
+	ID3D12Device*					m_pDev;				/// デバイス
+	ID3D12GraphicsCommandList*		m_pCmd;				/// コマンドリスト
+	uint32_t						m_FrameIndex;		/// フレーム番号
 
 	D3D12_INDEX_BUFFER_VIEW			m_IBV;				/// インデックスバッファビュー
 	D3D12_VERTEX_BUFFER_VIEW		m_VBV;				/// 頂点バッファビュー
