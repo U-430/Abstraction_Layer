@@ -6,6 +6,13 @@
 
 #include "System_Scene.h"
 
+#include "System_DirectX11.h"
+#include "System_DirectX12.h"
+#include "System_OpenGL.h"
+#include "Model_CubeDX11.h"
+#include "Model_CubeDX12.h"
+#include "Model_CubeOpenGL.h"
+
 //--------------------------------------------- 
 /// \param[in] HWND(_hwnd)
 /// 
@@ -30,6 +37,8 @@ bool SystemScene::SystemInit(HWND _hwnd)
         break;
 
     case OPENGL:
+        m_pLayer = new SystemOpenGL();
+        m_pCube = new ModelCubeOpenGL();
         break;
     default:
         return false;

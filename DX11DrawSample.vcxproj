@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Model_Cube.h" />
+    <ClInclude Include="Model_CubeOpenGL.h" />
     <ClInclude Include="System_DirectX12.h" />
     <ClInclude Include="DX11DrawSample.h" />
     <ClInclude Include="framework.h" />
@@ -151,17 +152,20 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Model_CubeDX12.h" />
     <ClInclude Include="System_Layer.h" />
+    <ClInclude Include="System_OpenGL.h" />
     <ClInclude Include="System_Scene.h" />
     <ClInclude Include="System_ScreenSize.h" />
     <ClInclude Include="System_DirectX11.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Model_CubeOpenGL.cpp" />
     <ClCompile Include="System_DirectX12.cpp" />
     <ClCompile Include="DX11DrawSample.cpp" />
     <ClCompile Include="Model_CubeDX11.cpp" />
     <ClCompile Include="Model_CubeDX12.cpp" />
     <ClCompile Include="System_DirectX11.cpp" />
+    <ClCompile Include="System_OpenGL.cpp" />
     <ClCompile Include="System_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>

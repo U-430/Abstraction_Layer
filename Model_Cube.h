@@ -22,16 +22,15 @@ struct VertexData
 class ModelCube
 {
 public:
-	virtual bool ModelInit(SystemLayer* layer) 
-	{
-		return true; 
-	};
+	virtual bool ModelInit(SystemLayer* layer) { return true; };
+
+	virtual bool ModelInit() { return true; };
 
 	virtual void ModelDraw() {};
 
 	virtual void ModelRelease() {};
 
-private:
+protected:
 	
 	/// 頂点データ
 	VertexData m_V[VERTEX_NUM] =
