@@ -26,8 +26,7 @@ struct ConstantBuffer
 };
 
 //--------------------------------------------- 
-/// \param[in] ID3D11Device*(_device)
-/// \param[in] ID3D11DeviceContext*(_context)
+/// \param[in] SystemLayer*(layer)
 /// 
 /// \return 
 //---------------------------------------------

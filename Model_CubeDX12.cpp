@@ -19,8 +19,7 @@ struct Vertex
 };
 
 //--------------------------------------------- 
-/// \param[in] ID3D12Device*(_device)
-/// \param[in] ID3D12GraphicsCommandList*(_cmd)
+/// \param[in] SystemLayer*(layer)
 /// 
 /// \return 
 //---------------------------------------------

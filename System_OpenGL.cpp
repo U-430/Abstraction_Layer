@@ -6,7 +6,11 @@
 #include "System_OpenGL.h"
 #include "System_ScreenSize.h"
 
-
+//--------------------------------------------- 
+/// \param[in] HWND(_hwnd)
+/// 
+/// \return 
+//---------------------------------------------
 bool SystemOpenGL::SystemInit(HWND _hwnd)
 {
     m_HWND = _hwnd;
@@ -49,12 +53,12 @@ bool SystemOpenGL::SystemInit(HWND _hwnd)
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-SCREEN_WIDTH / 4.0, SCREEN_WIDTH / 4.0, -SCREEN_HEIGHT / 4.0, SCREEN_HEIGHT / 4.0, 0.1, 100.0);	// 平行投影の設定にしておく
+    glFrustum(-8.0 / 200.0, 8.0 / 200.0, -4.5 / 200.0, 4.5 / 200.0, 0.1, 100.0);	// かなり望遠に
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(
-        0.0, 1.0, -10.0, 
+        0.0, 0.0, -6.0, 
         0.0, 0.0, 0.0, 
         0.0, 1.0, 0.0);
 
@@ -65,17 +69,26 @@ bool SystemOpenGL::SystemInit(HWND _hwnd)
     return true;
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemOpenGL::SystemBeforeRender()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// 描画面のクリア
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemOpenGL::SystemAfterRender()
 {
     glFlush();				// コマンドのフラッシュ
     SwapBuffers(m_HDC);		// 画面のフリップ（wgl関数）
 }
 
+//--------------------------------------------- 
+/// \return 
+//---------------------------------------------
 void SystemOpenGL::SystemRelease()
 {
     wglMakeCurrent(m_HDC, 0);
