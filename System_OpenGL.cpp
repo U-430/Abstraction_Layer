@@ -58,8 +58,8 @@ bool SystemOpenGL::SystemInit(HWND _hwnd)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(
-        0.0, 0.0, -6.0, 
-        0.0, 0.0, 0.0, 
+        3.0, 2.0, -6.0, 
+        1.0, 0.0, 0.0, 
         0.0, 1.0, 0.0);
 
     glDisable(GL_STENCIL_TEST);
