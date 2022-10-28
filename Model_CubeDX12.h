@@ -49,8 +49,6 @@ public:
 	// 解放処理
 	void ModelRelease();
 
-	void SetPos(float x);
-
 private:
 	ID3D12DescriptorHeap*			m_pHeapCBV;			/// ディスクリプタヒープ(定数バッファービュー等)
 	ID3D12Resource*					m_pIB;				/// インデックスバッファ

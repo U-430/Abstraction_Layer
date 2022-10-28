@@ -19,9 +19,10 @@ struct Vertex
 };
 
 //--------------------------------------------- 
-/// \param[in] SystemLayer*(layer)
+/// \brief DirectX12での初期化処理
+/// \param[in] SystemLayer*(layer) システムレイヤー
 /// 
-/// \return 
+/// \return bool
 //---------------------------------------------
 bool ModelCubeDX12::ModelInit(SystemLayer* layer)
 {
@@ -626,8 +627,9 @@ bool ModelCubeDX12::ModelInit(SystemLayer* layer)
 }
 
 //--------------------------------------------- 
+/// \brief DIrectX12での更新処理
 /// \param[in] uint32_t (frameindex)
-/// \return 
+/// \return 無し
 //---------------------------------------------
 void ModelCubeDX12::ModelUpdate(uint32_t frameindex)
 {
@@ -638,7 +640,8 @@ void ModelCubeDX12::ModelUpdate(uint32_t frameindex)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX12での描画処理
+/// \return 無し
 //---------------------------------------------
 void ModelCubeDX12::ModelDraw()
 {
@@ -658,7 +661,8 @@ void ModelCubeDX12::ModelDraw()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX12での解放処理
+/// \return 無し
 //---------------------------------------------
 void ModelCubeDX12::ModelRelease()
 {
@@ -694,9 +698,4 @@ void ModelCubeDX12::ModelRelease()
 
 	m_pRootSignature->Release();
 	m_pRootSignature = nullptr;
-}
-
-void ModelCubeDX12::SetPos(float x)
-{
-	m_CBV->pBuffer->World = XMMatrixTranslation(x, 0, 0);
 }

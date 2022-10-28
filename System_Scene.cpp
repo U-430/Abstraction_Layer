@@ -14,9 +14,10 @@
 #include "Model_CubeOpenGL.h"
 
 //--------------------------------------------- 
-/// \param[in] HWND(_hwnd)
+/// \brief Sceneの初期化処理
+/// \param[in] HWND(_hwnd) ウインドウハンドル
 /// 
-/// \return 
+/// \return bool
 //---------------------------------------------
 bool SystemScene::SystemInit(HWND _hwnd)
 {
@@ -63,7 +64,8 @@ bool SystemScene::SystemInit(HWND _hwnd)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief Sceneの描画処理
+/// \return 無し
 //---------------------------------------------
 void SystemScene::SystemDraw()
 {
@@ -75,7 +77,8 @@ void SystemScene::SystemDraw()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief Sceneの解放処理
+/// \return 無し
 //---------------------------------------------
 void SystemScene::SystemRelease()
 {

@@ -5,7 +5,6 @@
 //==============================================================================
 
 #include "System_DirectX12.h"
-#include <Windows.h>
 #include <iostream>
 #include "System_ScreenSize.h"
 
@@ -14,31 +13,12 @@ using namespace std;
 // 解放用関数
 template<typename T> void SafeRelease(T*& _ptr);
 
-// 実体化
-//const uint32_t	                    DirectX12::FrameCount;
-//
-//ComPtr<ID3D12Device>                DirectX12::m_pDevice;
-//ComPtr<ID3D12CommandQueue>          DirectX12::m_pQueue;
-//ComPtr<IDXGISwapChain3>             DirectX12::m_pSwapChain;
-//ComPtr<ID3D12Resource>              DirectX12::m_pColorBuffer[FrameCount];
-//ComPtr<ID3D12CommandAllocator>      DirectX12::m_pCmdAllocator[FrameCount];
-//ComPtr<ID3D12GraphicsCommandList>   DirectX12::m_pCmdList;
-//ComPtr<ID3D12DescriptorHeap>        DirectX12::m_pHeadRTV;
-//ComPtr<ID3D12Fence>                 DirectX12::m_pFence;
-//ComPtr<ID3D12Resource>              DirectX12::m_pDepthBuffer;
-//ComPtr<ID3D12DescriptorHeap>        DirectX12::m_pHeapDSV;
-//
-//HANDLE						        DirectX12::m_FenceEvent;
-//uint64_t					        DirectX12::m_FenceCounter[FrameCount];
-//uint32_t					        DirectX12::m_FrameIndex;
-//
-//D3D12_CPU_DESCRIPTOR_HANDLE	        DirectX12::m_HandleRTV[FrameCount];
-//D3D12_CPU_DESCRIPTOR_HANDLE         DirectX12::m_HandleDSV;
 
 //--------------------------------------------- 
-/// \param[in] HWND (hWnd)
+/// \brief DirectX12の初期化 
+/// \param[in] HWND (hWnd) ウインドウハンドル
 /// 
-/// \return 
+/// \return bool
 //---------------------------------------------
 bool SystemDirectX12::SystemInit(HWND hWnd)
 {
@@ -106,20 +86,6 @@ bool SystemDirectX12::SystemInit(HWND hWnd)
         cout << "DXGIファクトリー生成成功" << endl;
 
         // スワップチェインの設定
-        //DXGI_SWAP_CHAIN_DESC1 desc = {};
-
-        //desc.Width = SCREEN_WIDTH;                                       // 解像度の横幅
-        //desc.Height = SCREEN_HEIGHT;                                     // 解像度の縦幅
-        //desc.Scaling = DXGI_SCALING_NONE;                                // 拡大縮小の設定
-        //desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;                        // 表示形式のピクセルフォーマット
-        //desc.SampleDesc.Count = 1;                                       // ピクセル単位のマルチサンプリング数
-        //desc.SampleDesc.Quality = 0;                                     // 画像の品質 品質が高いほどパフォーマンスは低下
-        //desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;              // バックバッファの使用方法
-        //desc.BufferCount = FrameCount;                                   // バックバッファの数                                                     // フルスクリーン指定
-        //desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;                      // バックバッファの入れ替え時効果
-        //desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;             // スワップチェインの動作オプション
-
-
         DXGI_SWAP_CHAIN_DESC desc = {};
 
         desc.BufferDesc.Width                   = SCREEN_WIDTH;                             // 解像度の横幅
@@ -140,11 +106,8 @@ bool SystemDirectX12::SystemInit(HWND hWnd)
 
         // スワップチェインの生成
         IDXGISwapChain* pSwapChain = nullptr;
-        //IDXGISwapChain1* pSwapChain = nullptr;
 
         hr = pFactory->CreateSwapChain(m_pQueue, &desc, &pSwapChain);
-
-        //hr = pFactory->CreateSwapChainForHwnd(m_pQueue, WindowsApp::GetHWND(), &desc, nullptr, nullptr, &pSwapChain);
 
         if (FAILED(hr))
         {
@@ -380,8 +343,9 @@ bool SystemDirectX12::SystemInit(HWND hWnd)
     return true;
 }
 
-//--------------------------------------------- 
-/// \return 
+//---------------------------------------------
+/// \brief DirectX12の解放処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX12::SystemRelease()
 {
@@ -397,44 +361,37 @@ void SystemDirectX12::SystemRelease()
 
     // フェンス破棄
     SafeRelease(m_pFence);
-    //m_pFence.Reset();
 
     // レンダーターゲットビューの破棄
     SafeRelease(m_pHeadRTV);
-    //m_pHeadRTV.Reset();
 
     for (auto i = 0u; i < FRAME_COUNT; i++)
     {
         SafeRelease(m_pColorBuffer[i]);
-        //m_pColorBuffer[i].Reset();
     }
 
     // コマンドリストの破棄
     SafeRelease(m_pCmdList);
-    //m_pCmdList.Reset();
 
     // コマンドアロケータの破棄
     for (auto i = 0u; i < FRAME_COUNT; i++)
     {
         SafeRelease(m_pCmdAllocator[i]);
-       //m_pCmdAllocator[i].Reset();
     }
 
     // スワップチェインの破棄
     SafeRelease(m_pSwapChain);
-    //m_pSwapChain.Reset();
 
     // コマンドキューの破棄
     SafeRelease(m_pQueue);
-    //m_pQueue.Reset();
 
     // デバイスの破棄
     SafeRelease(m_pDevice);
-    //m_pDevice.Reset();
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX12の描画処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX12::SystemRender()
 {
@@ -495,7 +452,8 @@ void SystemDirectX12::SystemRender()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX12の描画前処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX12::SystemBeforeRender()
 {
@@ -530,10 +488,11 @@ void SystemDirectX12::SystemBeforeRender()
 }
 
 //--------------------------------------------- 
-/// \param[in] float (r)
-/// \param[in] float (g)
-/// \param[in] float (b)
-/// \return 
+/// \brief DirectX12の描画前処理
+/// \param[in] float (r) 赤成分
+/// \param[in] float (g) 緑成分
+/// \param[in] float (b) 青成分
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX12::SystemBeforeRender(float r, float g, float b)
 {
@@ -568,7 +527,8 @@ void SystemDirectX12::SystemBeforeRender(float r, float g, float b)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX12の描画後処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX12::SystemAfterRender()
 {
@@ -596,8 +556,9 @@ void SystemDirectX12::SystemAfterRender()
     SystemPresent(1);
 }
 
-//--------------------------------------------- 
-/// \return ID3D12Device*
+//---------------------------------------------
+/// \brief ID3D12Deviceの取得
+/// \return ID3D12Device* 
 //---------------------------------------------
 ID3D12Device* SystemDirectX12::SystemGetDevice()
 {
@@ -605,6 +566,7 @@ ID3D12Device* SystemDirectX12::SystemGetDevice()
 }
 
 //--------------------------------------------- 
+/// \brief ID3D12CommandQueueの取得
 /// \return ID3D12CommandQueue*
 //---------------------------------------------
 ID3D12CommandQueue* SystemDirectX12::SystemGetQueue()
@@ -613,6 +575,7 @@ ID3D12CommandQueue* SystemDirectX12::SystemGetQueue()
 }
 
 //--------------------------------------------- 
+/// \brief ID3D12GraphicsCommandListの取得
 /// \return ID3D12GraphicsCommandList*
 //---------------------------------------------
 ID3D12GraphicsCommandList* SystemDirectX12::SystemGetCmdList()
@@ -621,6 +584,7 @@ ID3D12GraphicsCommandList* SystemDirectX12::SystemGetCmdList()
 }
 
 //--------------------------------------------- 
+/// \brief FrameIndexの取得
 /// \return uint32_t
 //---------------------------------------------
 uint32_t SystemDirectX12::SystemGetFrameIndex()
@@ -629,14 +593,11 @@ uint32_t SystemDirectX12::SystemGetFrameIndex()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief  GPU処理の完了を待機
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX12::SystemWaitGPU()
 {
-   // assert(m_pQueue != nullptr);
-   // assert(m_pFence != nullptr);
-   // assert(m_FenceEvent != nullptr);
-
     // シグナル処理
     m_pQueue->Signal(m_pFence, m_FenceCounter[m_FrameIndex]);
 
@@ -650,6 +611,10 @@ void SystemDirectX12::SystemWaitGPU()
     m_FenceCounter[m_FrameIndex]++;
 }
 
+//---------------------------------------------
+/// \brief 画面の表示
+/// \return 無し 
+//---------------------------------------------
 void SystemDirectX12::SystemPresent(uint32_t _interval)
 {
     // 画面に表示

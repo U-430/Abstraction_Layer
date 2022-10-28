@@ -25,30 +25,31 @@ GLPos g_Pos[8] =
     {-1.0f,  1.0f,  1.0f}
 };
 
+// 色
 float g_Color[6][3] =
 {
-    {1.0f, 1.0f, 1.0f},
-    {1.0f, 0.0f, 0.0f},
-    {0.0f, 1.0f, 0.0f},
-    {0.0f, 0.0f, 1.0f},
-    {1.0f, 1.0f, 0.0f},
-    {1.0f, 0.0f, 1.0f}
+    {1.0f, 1.0f, 1.0f}, // 白
+    {1.0f, 0.0f, 0.0f}, // 赤
+    {0.0f, 1.0f, 0.0f}, // 緑
+    {0.0f, 0.0f, 1.0f}, // 青
+    {1.0f, 1.0f, 0.0f}, // 黄
+    {1.0f, 0.0f, 1.0f}  // 桃
 };
 
+// インデックスリスト
 int g_Index[24] =
 {
-    0, 1, 2, 3,
-    2, 3, 4, 5,
-    4, 5, 6, 7,
-    6, 7, 0, 1,
-    1, 3, 7, 5,
-    4, 6, 2, 0
+    0, 1, 2, 3, // 正面
+    2, 3, 4, 5, // 右面
+    4, 5, 6, 7, // 奥面
+    6, 7, 0, 1, // 左面
+    1, 3, 7, 5, // 上面
+    2, 0, 4, 6  // 下面
 };
 
-GLuint g_Texname[TEXNUM];
-
 //--------------------------------------------- 
-/// \param[in] SystemLayer*(layer)
+/// \brief OpenGLでの初期化処理
+/// \param[in] SystemLayer*(layer)　システムレイヤー
 /// 
 /// \return 
 //---------------------------------------------
@@ -61,17 +62,17 @@ bool ModelCubeOpenGL::ModelInit(SystemLayer* layer)
         {
             if (y % 2 == 0)
             {
-                m_Tex[y][x][0] = 255.0f; // R
-                m_Tex[y][x][1] = 255.0f; // G
-                m_Tex[y][x][2] = 0.0f; // B
-                m_Tex[y][x][3] = 255.0f; // A
+                m_Tex[y][x][0] = 255;   // R
+                m_Tex[y][x][1] = 255;   // G
+                m_Tex[y][x][2] = 0;     // B
+                m_Tex[y][x][3] = 255;   // A
             }
             else
             {
-                m_Tex[y][x][0] = 0.0f; // R
-                m_Tex[y][x][1] = 0.0f; // G
-                m_Tex[y][x][2] = 255.0f; // B
-                m_Tex[y][x][3] = 255.0f; // A
+                m_Tex[y][x][0] = 0;     // R
+                m_Tex[y][x][1] = 0;     // G
+                m_Tex[y][x][2] = 255;   // B
+                m_Tex[y][x][3] = 255;   // A
             }
         }
     }
@@ -89,7 +90,8 @@ bool ModelCubeOpenGL::ModelInit(SystemLayer* layer)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief OpenGLでの描画処理
+/// \return 無し
 //---------------------------------------------
 void ModelCubeOpenGL::ModelDraw()
 {
@@ -119,54 +121,13 @@ void ModelCubeOpenGL::ModelDraw()
         glTexCoord2f(1.0f, 0.0f);
     }
 
-    //// 正面
-    //glColor3f(1.0f, 1.0f, 1.0f);
-    //glVertex3f(-1.0f, -1.0f, -1.0f);
-    //glVertex3f(-1.0f,  1.0f, -1.0f);
-    //glVertex3f( 1.0f, -1.0f, -1.0f);
-    //glVertex3f( 1.0f,  1.0f, -1.0f);
-
-    //// 左面
-    //glColor3f(1.0f, 0.0f, 0.0f);
-    //glVertex3f (1.0f, -1.0f, -1.0f);
-    //glVertex3f( 1.0f,  1.0f, -1.0f);
-    //glVertex3f( 1.0f, -1.0f,  1.0f);
-    //glVertex3f( 1.0f,  1.0f,  1.0f);
-
-    //// 奥面
-    //glColor3f(0.0f, 1.0f, 0.0f);
-    //glVertex3f( 1.0f, -1.0f,  1.0f);
-    //glVertex3f( 1.0f,  1.0f,  1.0f);
-    //glVertex3f(-1.0f, -1.0f,  1.0f);
-    //glVertex3f(-1.0f,  1.0f,  1.0f);
-
-    //// 右面
-    //glColor3f(0.0f, 0.0f, 1.0f);
-    //glVertex3f(-1.0f, -1.0f,  1.0f);
-    //glVertex3f(-1.0f,  1.0f,  1.0f);
-    //glVertex3f(-1.0f, -1.0f, -1.0f);
-    //glVertex3f(-1.0f,  1.0f, -1.0f);
-
-    //// 上面
-    //glColor3f(1.0f, 1.0f, 0.0f);
-    //glVertex3f(-1.0f, 1.0f, -1.0f);
-    //glVertex3f(1.0f, 1.0f, -1.0f);
-    //glVertex3f(-1.0f, 1.0f, 1.0f);
-    //glVertex3f(1.0f, 1.0f, 1.0f);
-
-    //// 下面
-    //glColor3f(1.0f, 0.0f, 1.0f);
-    //glVertex3f(1.0f, -1.0f, 1.0f);
-    //glVertex3f(-1.0f, -1.0f, 1.0f);
-    //glVertex3f(1.0f, -1.0f, -1.0f);
-    //glVertex3f(-1.0f, -1.0f, -1.0f);
-
     glEnd();
     glDisable(GL_BLEND);
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief OpenGLでの解放処理
+/// \return 無し
 //---------------------------------------------
 void ModelCubeOpenGL::ModelRelease()
 {

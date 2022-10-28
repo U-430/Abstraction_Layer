@@ -26,7 +26,8 @@ struct ConstantBuffer
 };
 
 //--------------------------------------------- 
-/// \param[in] SystemLayer*(layer)
+/// \brief DirectX11での初期化処理
+/// \param[in] SystemLayer*(layer) システムレイヤー
 /// 
 /// \return 
 //---------------------------------------------
@@ -250,15 +251,6 @@ bool ModelCubeDX11::ModelInit(SystemLayer* layer)
 
 	m_pContext->Unmap(m_pTexture, 0);
 
-	/*tex.pSysMem = &srcData;
-	tex.SysMemPitch = k_PixSize * 4;
-
-	hr = m_pDev->CreateTexture2D(&td, &tex, &m_pTexture);
-	if (FAILED(hr))
-	{
-		return false;
-	}*/
-
 	// シェーダーリソースビュー生成
 	D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
 	srv.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -288,7 +280,8 @@ bool ModelCubeDX11::ModelInit(SystemLayer* layer)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX11での描画処理
+/// \return 無し
 //---------------------------------------------
 void ModelCubeDX11::ModelDraw()
 {
@@ -313,12 +306,12 @@ void ModelCubeDX11::ModelDraw()
 	m_pContext->PSSetShader(m_pPixelShader, NULL, 0);
 
 	// 描画
-	//m_pContext->Draw(VERTEX_NUM, 0);
 	m_pContext->DrawIndexed(6 * 6, 0, 0);
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX11での解放処理
+/// \return 無し
 //---------------------------------------------
 void ModelCubeDX11::ModelReleace()
 {

@@ -9,7 +9,8 @@
 #define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
 
 //--------------------------------------------- 
-/// \param[in] HWND (hWnd)
+/// \brief DirectX11の初期化 
+/// \param[in] HWND (hWnd) ウインドウハンドル
 /// 
 /// \return 
 //---------------------------------------------
@@ -128,7 +129,8 @@ bool SystemDirectX11::SystemInit(HWND hWnd)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX11の描画前処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX11::SystemBeforeRender()
 {
@@ -142,7 +144,8 @@ void SystemDirectX11::SystemBeforeRender()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX11の描画後処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX11::SystemAfterRender()
 {
@@ -150,7 +153,8 @@ void SystemDirectX11::SystemAfterRender()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief DirectX11の解放処理
+/// \return 無し
 //---------------------------------------------
 void SystemDirectX11::SystemRelease()
 {
@@ -164,7 +168,8 @@ void SystemDirectX11::SystemRelease()
     SAFE_RELEASE(m_pDevice);
 }
 
-//--------------------------------------------- 
+//---------------------------------------------
+/// \brief ID3D11Deviceを取得
 /// \return ID3D11Device*
 //---------------------------------------------
 ID3D11Device* SystemDirectX11::SystemGetDevice()
@@ -173,6 +178,7 @@ ID3D11Device* SystemDirectX11::SystemGetDevice()
 }
 
 //--------------------------------------------- 
+/// \brief ID3D11DeviceContextを取得
 /// \return ID3D11DeviceContext*
 //---------------------------------------------
 ID3D11DeviceContext* SystemDirectX11::SystemGetDeviceContext()

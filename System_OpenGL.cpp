@@ -7,9 +7,10 @@
 #include "System_ScreenSize.h"
 
 //--------------------------------------------- 
-/// \param[in] HWND(_hwnd)
+/// \brief OpenGLの初期化処理 
+/// \param[in] HWND(_hwnd) ウインドウハンドル
 /// 
-/// \return 
+/// \return bool
 //---------------------------------------------
 bool SystemOpenGL::SystemInit(HWND _hwnd)
 {
@@ -70,7 +71,8 @@ bool SystemOpenGL::SystemInit(HWND _hwnd)
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief OpenGLの描画前処理
+/// \return 無し
 //---------------------------------------------
 void SystemOpenGL::SystemBeforeRender()
 {
@@ -78,7 +80,8 @@ void SystemOpenGL::SystemBeforeRender()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief OpenGLの描画後処理
+/// \return 無し
 //---------------------------------------------
 void SystemOpenGL::SystemAfterRender()
 {
@@ -87,7 +90,8 @@ void SystemOpenGL::SystemAfterRender()
 }
 
 //--------------------------------------------- 
-/// \return 
+/// \brief OpenGLの解放処理
+/// \return 無し
 //---------------------------------------------
 void SystemOpenGL::SystemRelease()
 {
