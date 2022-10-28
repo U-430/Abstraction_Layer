@@ -677,24 +677,24 @@ void ModelCubeDX12::ModelRelease()
 		//m_pCB[i].Reset();
 
 		//m_pCB[i]->Release();
-		//m_pCB[i] = nullptr;
+		m_pCB[i] = nullptr;
 	}
 
 	//m_pVB.Reset();
 	
 	//m_pVB->Release();
-	//m_pVB = nullptr;
+	m_pVB = nullptr;
 
 	//m_pPSO.Reset();
 
 	//m_pPSO->Release();
-	//m_pPSO = nullptr;
+	m_pPSO = nullptr;
 
 	//m_pHeapCBV->Release();
-	//m_pHeapCBV = nullptr;
+	m_pHeapCBV = nullptr;
 
 	//m_pIB->Release();
-	//m_pIB = nullptr;
+	m_pIB = nullptr;
 
 	m_pRootSignature->Release();
 	m_pRootSignature = nullptr;

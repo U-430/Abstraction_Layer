@@ -51,7 +51,7 @@ int g_Index[24] =
 /// \brief OpenGLでの初期化処理
 /// \param[in] SystemLayer*(layer)　システムレイヤー
 /// 
-/// \return 
+/// \return bool
 //---------------------------------------------
 bool ModelCubeOpenGL::ModelInit(SystemLayer* layer)
 {

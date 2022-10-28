@@ -57,6 +57,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
+        g_Scene.SystemUpdate();
         g_Scene.SystemDraw();
     }
 

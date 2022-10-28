@@ -9,7 +9,6 @@
 #include "Model_Cube.h"
 
 #define TEXSIZE 32
-#define TEXNUM 1
 
 class ModelCubeOpenGL : public ModelCube
 {

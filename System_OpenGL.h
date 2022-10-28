@@ -26,7 +26,7 @@ public:
 	void SystemRelease();
 
 private:
-	HWND	m_HWND;
-	HDC		m_HDC;
-	HGLRC	m_HRC;
+	HWND	m_HWND;	/// ウィンドウハンドル
+	HDC		m_HDC;	/// デバイスコンテキスト
+	HGLRC	m_HRC;	/// レンダリングコンテキスト
 };

@@ -64,6 +64,33 @@ bool SystemScene::SystemInit(HWND _hwnd)
 }
 
 //--------------------------------------------- 
+/// \brief Sceneの更新処理
+/// \return 無し
+//---------------------------------------------
+void SystemScene::SystemUpdate()
+{
+    if (GetAsyncKeyState('1') && !m_KeyFlg)
+    {
+        m_KeyFlg = true;
+        SystemSwitchLayer(DIRECTX11);
+    }
+    else if (GetAsyncKeyState('2') && !m_KeyFlg)
+    {
+        m_KeyFlg = true;
+        SystemSwitchLayer(DIRECTX12);
+    }
+    else if (GetAsyncKeyState('3') && !m_KeyFlg)
+    {
+        m_KeyFlg = true;
+        SystemSwitchLayer(OPENGL);
+    }
+    else
+    {
+        m_KeyFlg = false;
+    }
+}
+
+//--------------------------------------------- 
 /// \brief Sceneの描画処理
 /// \return 無し
 //---------------------------------------------
@@ -88,4 +115,51 @@ void SystemScene::SystemRelease()
 
     delete m_pCube;
     delete m_pLayer;
+}
+
+//--------------------------------------------- 
+/// \brief Layerの切り替え
+/// \return 無し
+//---------------------------------------------
+void SystemScene::SystemSwitchLayer(VERSION ver)
+{
+    SystemRelease();
+
+    m_SystemVersion = ver;
+
+    // バージョン選択
+    switch (m_SystemVersion)
+    {
+    case DIRECTX11:
+        m_pLayer = new SystemDirectX11();
+        m_pCube = new ModelCubeDX11();
+
+        break;
+    case DIRECTX12:
+        m_pLayer = new SystemDirectX12();
+        m_pCube = new ModelCubeDX12();
+
+        break;
+
+    case OPENGL:
+        m_pLayer = new SystemOpenGL();
+        m_pCube = new ModelCubeOpenGL();
+        break;
+    default:
+        break;
+    }
+
+    // レイヤー初期化
+    if (m_pLayer->SystemInit(m_Hwnd))
+    {
+        // キューブ初期化
+        if (!m_pCube->ModelInit(m_pLayer))
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
 }
