@@ -13,6 +13,9 @@
 class ModelCubeOpenGL : public ModelCube
 {
 public:
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
 	bool ModelInit(SystemLayer* layer);
 
 	void ModelDraw();
@@ -20,5 +23,8 @@ public:
 	void ModelRelease();
 
 private:
+	//---------------------------------------------------------------------------
+	// private variables
+	//---------------------------------------------------------------------------
 	GLubyte m_Tex[TEXSIZE][TEXSIZE][4];
 };

@@ -28,6 +28,10 @@
 class SystemDirectX12 : public SystemLayer
 {
 public:
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
+
 	bool SystemInit(HWND hWnd);		/// 初期化処理
 	void SystemRelease();			/// 解放処理
 	void SystemRender();			/// 描画処理
@@ -43,10 +47,17 @@ public:
 	ID3D12GraphicsCommandList*	SystemGetCmdList();
 	uint32_t					SystemGetFrameIndex();
 
+	///<
 private:
+	//---------------------------------------------------------------------------
+	// private methods
+	//---------------------------------------------------------------------------
 	void SystemWaitGPU();
 	void SystemPresent(uint32_t _interval);
 
+	//---------------------------------------------------------------------------
+	// private variables
+	//---------------------------------------------------------------------------
 	ID3D12Device*				m_pDevice;						/// デバイス
 	ID3D12CommandQueue*			m_pQueue;						/// コマンドキュー
 	IDXGISwapChain3*			m_pSwapChain;					/// スワップチェイン
@@ -64,4 +75,6 @@ private:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE	m_HandleRTV[FRAME_COUNT];		/// CPUディスクリプタ(レンダーターゲットビュー)
 	D3D12_CPU_DESCRIPTOR_HANDLE	m_HandleDSV;
+
+	///<
 };

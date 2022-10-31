@@ -6,10 +6,15 @@
 //==============================================================================
 
 #include <Windows.h>
+#define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
 
 class SystemLayer
 {
 public:
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
+
 	/// ‰Šú‰»ˆ—
 	virtual bool SystemInit() { return true; };
 	virtual bool SystemInit(HWND _hwnd) { return true; };
@@ -23,4 +28,6 @@ public:
 
 	/// ‰ğ•úˆ—
 	virtual void SystemRelease() {};
+
+	///<
 };

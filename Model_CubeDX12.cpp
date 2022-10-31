@@ -696,6 +696,5 @@ void ModelCubeDX12::ModelRelease()
 	//m_pIB->Release();
 	m_pIB = nullptr;
 
-	m_pRootSignature->Release();
-	m_pRootSignature = nullptr;
+	SAFE_RELEASE(m_pRootSignature);
 }

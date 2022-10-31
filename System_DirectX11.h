@@ -15,6 +15,10 @@
 class SystemDirectX11 : public SystemLayer
 {
 public:
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
+
 	bool SystemInit(HWND hWnd);
 	void SystemBeforeRender();
 	void SystemAfterRender();
@@ -23,7 +27,12 @@ public:
 	ID3D11Device* SystemGetDevice();
 	ID3D11DeviceContext* SystemGetDeviceContext();
 
+	///<
 private:
+	//---------------------------------------------------------------------------
+	// private variables
+	//---------------------------------------------------------------------------
+
 	ID3D11Device*			m_pDevice;				/// デバイス
 	ID3D11DeviceContext*	m_pDeviceContext;		/// デバイスコンテキスト
 	IDXGISwapChain*			m_pSwapChain;			/// スワップチェイン
@@ -38,4 +47,6 @@ private:
 
 	UINT					m_Width;				/// スクリーンの横幅
 	UINT					m_Height;				/// スクリーンの縦幅
+
+	///<
 };

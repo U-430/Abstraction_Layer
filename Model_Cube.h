@@ -8,7 +8,6 @@
 #include "System_Layer.h"
 
 
-#define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
 #define VERTEX_NUM 24
 #define INDEX_NUM 36
 
@@ -22,6 +21,10 @@ struct VertexData
 class ModelCube
 {
 public:
+
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
 	virtual bool ModelInit(SystemLayer* layer) { return true; };
 
 	virtual bool ModelInit() { return true; };
@@ -30,8 +33,12 @@ public:
 
 	virtual void ModelRelease() {};
 
+	///<
 protected:
-	
+	//---------------------------------------------------------------------------
+	// protected variables
+	//---------------------------------------------------------------------------
+
 	/// 頂点データ
 	VertexData m_V[VERTEX_NUM] =
 	{
@@ -76,4 +83,6 @@ protected:
 		16, 17, 18, 19, 18 ,17,
 		20, 21, 22, 23, 22, 21,
 	};
+
+	///<
 };

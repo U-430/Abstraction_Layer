@@ -6,8 +6,6 @@
 
 #include "System_DirectX11.h"
 
-#define SAFE_RELEASE(o) {if(o != NULL){o->Release();o = NULL;}else{o = NULL;}}
-
 //--------------------------------------------- 
 /// \brief DirectX11の初期化 
 /// \param[in] HWND (hWnd) ウインドウハンドル

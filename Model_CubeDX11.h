@@ -12,6 +12,10 @@
 class ModelCubeDX11 : public ModelCube
 {
 public:
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
+
 	// 初期化処理
 	bool ModelInit(SystemLayer* layer);
 
@@ -21,7 +25,12 @@ public:
 	// 解放処理
 	void ModelReleace();
 
+	///<
 private:
+	//---------------------------------------------------------------------------
+	// private variables
+	//---------------------------------------------------------------------------
+
 	ID3D11Device*				m_pDev;				/// デバイス
 	ID3D11DeviceContext*		m_pContext;			/// デバイスコンテキスト
 	ID3D11Buffer*				m_pVertexBuffer;	/// 頂点バッファ
@@ -35,4 +44,5 @@ private:
 
 	ID3D11Buffer*				m_pIndexBuffer;		/// インデックスバッファ
 	ID3D11Buffer*				m_pConstantBuffer;	/// 定数バッファ
+	///<
 };

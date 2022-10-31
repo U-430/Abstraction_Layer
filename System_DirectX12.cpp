@@ -478,7 +478,7 @@ void SystemDirectX12::SystemBeforeRender()
     m_pCmdList->OMSetRenderTargets(1, &m_HandleRTV[m_FrameIndex], FALSE, &m_HandleDSV);
 
     // クリアカラーの設定
-    float clearColor[] = { 0.25f, 0.25f, 0.25f, 1.0f };
+    float clearColor[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 
     // レンダーターゲットビューをクリア
     m_pCmdList->ClearRenderTargetView(m_HandleRTV[m_FrameIndex], clearColor, 0, nullptr);
@@ -638,6 +638,10 @@ void SystemDirectX12::SystemPresent(uint32_t _interval)
     m_FenceCounter[m_FrameIndex] = currentValue + 1;
 }
 
+//---------------------------------------------
+/// \brief 解放用関数
+/// \return 無し 
+//---------------------------------------------
 template<typename T> void SafeRelease(T*& _ptr)
 {
     if (_ptr != nullptr)

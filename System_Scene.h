@@ -10,6 +10,7 @@
 
 enum VERSION
 {
+	NONE,
 	DIRECTX11,
 	DIRECTX12,
 	OPENGL
@@ -18,7 +19,9 @@ enum VERSION
 class SystemScene
 {
 public:
-
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
 	bool SystemInit(HWND _hwnd);
 
 	void SystemUpdate();
@@ -26,7 +29,12 @@ public:
 	void SystemDraw();
 
 	void SystemRelease();
+
+	///<
 private:
+	//---------------------------------------------------------------------------
+	// private variables
+	//---------------------------------------------------------------------------
 
 	void SystemSwitchLayer(VERSION ver);
 
@@ -37,4 +45,6 @@ private:
 	VERSION			m_SystemVersion = OPENGL;		/// •`‰æ‚Ìƒo[ƒWƒ‡ƒ“
 
 	bool			m_KeyFlg = false;
+
+	///<
 };

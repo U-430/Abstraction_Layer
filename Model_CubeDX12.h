@@ -37,6 +37,10 @@ struct Texture
 class ModelCubeDX12 : public ModelCube
 {
 public:
+	//---------------------------------------------------------------------------
+	// public methods
+	//---------------------------------------------------------------------------
+
 	// 初期化処理
 	bool ModelInit(SystemLayer* layer);
 
@@ -49,7 +53,12 @@ public:
 	// 解放処理
 	void ModelRelease();
 
+	///<
 private:
+	//---------------------------------------------------------------------------
+	// private variables
+	//---------------------------------------------------------------------------
+
 	ID3D12DescriptorHeap*			m_pHeapCBV;			/// ディスクリプタヒープ(定数バッファービュー等)
 	ID3D12Resource*					m_pIB;				/// インデックスバッファ
 	ID3D12Resource*					m_pVB;				/// 頂点バッファ
@@ -69,4 +78,6 @@ private:
 	Texture							m_Texture;			/// テクスチャデータ
 	
 	float							m_RotateAngle;		/// 回転角
+
+	///<
 };
