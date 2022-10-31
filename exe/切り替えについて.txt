@@ -1,0 +1,2 @@
+1キー：DirectX11
+3キー：OpenGL
